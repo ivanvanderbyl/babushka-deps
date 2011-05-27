@@ -6,7 +6,8 @@ dep('bootstrap chef server with rubygems') {
     'rubygems',
     'rubygems with no docs',
     'chef.gem',
-    'ohai.gem'
+    'ohai.gem',
+    'chef solo bootstap'
   ]
 }
 
@@ -37,7 +38,7 @@ dep('ohai.gem') {
   installs 'ohai'
 }
 
-dep('chef solo') {
+dep('chef solo bootstap') {
   requires [
     'chef solo configuration',
     'chef bootstrap configuration'
@@ -48,7 +49,12 @@ dep('chef solo') {
   meet {
     shell("mkdir -p #{File.expand_path("~/")}/chef-src", :sudo => !File.writable?(File.expand_path("~/")))
     log_shell "Downloading bootstrap version #{var(:chef_version, :default => "0.9.16")}", "wget http://s3.amazonaws.com/chef-solo/bootstrap-#{var(:chef_version)}.tar.gz -O ~/chef-src/bootstrap.tar.gz" 
+    # if var(:chef_version).to_f < 0.10
+    #   shell("touch /etc/chef/server.rb", :sudo => true)
+    #   shell("ln -s /etc/chef/server.rb /etc/chef/webui.rb", :sudo => true)
+    # end
     log_shell "Bootstrapping Chef", "chef-solo -c /etc/chef/solo.rb -j ~/chef.json ~/chef-src/bootstrap.tar.gz", :spinner => true, :sudo => !File.writable?("/etc/chef/solo.rb")
+    
   }
 }
 
