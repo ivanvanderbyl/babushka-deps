@@ -29,7 +29,7 @@ dep('chef install dependencies.managed') {
 }
 
 dep('chef.gem'){
-  installs 'chef ~> 0.9.16'
+  installs "chef #{var(:chef_version, :default => "0.9.16")}"
   provides 'chef-client'
 }
 
@@ -46,7 +46,9 @@ dep('chef solo') {
     false
   }
   meet {
-    log_shell "Downloading latest chef bootstrap", 'chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-0.9.16.tar.gz', :spinner => true, :sudo => !File.writable?("/etc/chef/solo.rb")
+    shell("mkdir -p #{File.expand_path("~/")}chef-src", :sudo => !File.writable?(File.expand_path("~/")))
+    log_shell "Downloading bootstrap version #{var(:chef_version, :default => "0.9.16")}", "wget http://s3.amazonaws.com/chef-solo/bootstrap-#{var(:chef_version)}.tar.gz -O ~/chef-src/bootstrap.tar.gz" 
+    log_shell "Bootstrapping Chef", "chef-solo -c /etc/chef/solo.rb -j ~/chef.json ~/chef-src/bootstrap.tar.gz", :spinner => true, :sudo => !File.writable?("/etc/chef/solo.rb")
   }
 }
 
