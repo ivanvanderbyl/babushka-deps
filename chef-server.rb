@@ -49,5 +49,5 @@ dep('chef server.managed') {
   installs {
     via :apt, 'chef-server'
   }
-  provides %w(chef-client knife chef-server chef-server-api chef-server-webui chef-solr chef-expander)
+  provides %w(chef-server chef-server-webui chef-solr)
 }
