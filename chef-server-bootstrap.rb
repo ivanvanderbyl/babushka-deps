@@ -28,11 +28,38 @@ dep('chef install dependencies.managed') {
   provides %w[wget make irb gcc]
 }
 
-dep 'chef.gem' do
+dep('chef.gem'){
   installs 'chef ~> 0.9.16'
   provides 'chef-client'
-end
+}
 
-dep 'ohai.gem' do
+dep('ohai.gem') {
   installs 'ohai'
-end
+}
+
+dep('chef solo') {
+  requires [
+    'chef solo configuration',
+    'chef bootstrap configuration'
+  ]
+  met? {
+    false
+  }
+  meet {
+    shell('chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-latest.tar.gz', :sudo => true)
+  }
+}
+
+dep('chef solo configuration') {
+  met?{ File.exists?("/etc/chef/solo.rb") }
+  meet {
+    render_erb 'chef/solo.rb.erb', :to => '/etc/chef/solo.rb', :perms => '755', :sudo => true
+  }
+}
+
+dep('chef bootstrap configuration') {
+  met?{ File.exists?("~/chef.json") }
+  meet {
+    render_erb 'chef/chef.json.erb', :to => '~/chef.json', :perms => '755', :sudo => false
+  }
+}
