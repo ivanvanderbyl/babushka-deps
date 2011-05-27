@@ -65,6 +65,20 @@ dep('chef bootstrap configuration') {
   
   met?{ File.exists?(chef_json_path) }
   meet {
-    render_erb 'chef/chef.json.erb', :to => chef_json_path, :perms => '755', :sudo => false
+    file = File.open(chef_json_path, "w+") do |file|
+      file.write(%({
+        "chef": {
+          "server_url": "http://localhost:4000",
+          "server_fqdn": "http://chef.easylodge.com.au",
+          "webui_enabled": true,
+          "init_style": "init",
+          "client_interval": 1800
+        },
+        "run_list": [ "recipe[chef::bootstrap_server]" ]
+      }
+      ))
+    end
+    file.close
+    # render_erb 'chef/chef.json.erb', :to => chef_json_path, :perms => '755', :sudo => false
   }
 }
