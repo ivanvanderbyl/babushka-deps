@@ -16,3 +16,9 @@ dep 'zlib headers.managed' do
   installs { via :apt, 'zlib1g-dev' }
   provides []
 end
+
+dep 'sshd.managed' do
+  installs {
+    via :apt, 'openssh-server'
+  }
+end
