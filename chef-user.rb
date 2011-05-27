@@ -27,6 +27,7 @@ dep 'passwordless ssh logins' do
     shell "id -gn #{var(:username)}"
   end
   met? {
+    shell("touch '#{ssh_dir / 'authorized_keys'}'")
     sudo "grep '#{var(:your_ssh_public_key)}' '#{ssh_dir / 'authorized_keys'}'"
   }
   before {
@@ -44,7 +45,9 @@ end
 
 dep 'public key' do
   met? { grep /^ssh-dss/, '~/.ssh/id_dsa.pub' }
-  meet { log shell("ssh-keygen -t dsa -f ~/.ssh/id_dsa -N ''") }
+  meet { 
+    log shell("ssh-keygen -t dsa -f ~/.ssh/id_dsa -N ''") 
+  }
 end
 
 dep 'dot files' do
