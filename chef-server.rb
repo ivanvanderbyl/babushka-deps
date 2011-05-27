@@ -19,12 +19,11 @@ dep("opscode apt source added") {
   met? { File.exists? "/etc/apt/sources.list.d/opscode.list" }
   
   meet {
-    shell 'echo "deb http://apt.opscode.com/ `lsb_release -cs`-0.10 main" | sudo tee /etc/apt/sources.list.d/opscode.list'
+    shell 'echo "deb http://apt.opscode.com/ `lsb_release -cs` main" | sudo tee /etc/apt/sources.list.d/opscode.list'
     shell 'wget -qO - http://apt.opscode.com/packages@opscode.com.gpg.key | sudo apt-key add -'
     shell 'sudo apt-get update'
   }
 }
-
 
 dep 'wget.managed' do
   installs {
