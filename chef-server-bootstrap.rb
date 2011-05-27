@@ -66,17 +66,17 @@ dep('chef bootstrap configuration') {
   met?{ File.exists?(chef_json_path) }
   meet {
     shell("cat > '#{chef_json_path}'",
-      :input => %({
-        "chef": {
-          "server_url": "http://localhost:4000",
-          "server_fqdn": "http://chef.easylodge.com.au",
-          "webui_enabled": true,
-          "init_style": "init",
-          "client_interval": 1800
-        },
-        "run_list": [ "recipe[chef::bootstrap_server]" ]
-      }
-      ),
+      :input => 
+%({
+  "chef": {
+    "server_url": "http://localhost:4000",
+    "server_fqdn": "http://chef.easylodge.com.au",
+    "webui_enabled": true,
+    "init_style": "init",
+    "client_interval": 1800
+  },
+  "run_list": [ "recipe[chef::bootstrap_server]" ]
+}),
       :sudo => false
     )
   }
