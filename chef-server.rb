@@ -44,7 +44,7 @@ dep('chef.managed') {
   provides %w(chef-client knife)
 }
 
-dep('chef-server.managed') {
+dep('chef server.managed') {
   requires 'chef.managed'
   installs {
     via :apt, 'chef-server'
