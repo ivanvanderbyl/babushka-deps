@@ -1,3 +1,7 @@
+def ssh_conf_path file
+  "/etc#{'/ssh' if Babushka::Base.host.linux?}/#{file}_config"
+end
+
 dep 'system' do
   requires 'set.locale', 'hostname', 'tmp cleaning grace period', 'core software'
 end
