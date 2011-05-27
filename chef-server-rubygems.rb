@@ -10,6 +10,8 @@ dep('bootstrap chef server with rubygems') {
   ]
 }
 
+dep('bootstrap chef') { requires 'bootstrap chef server with rubygems' }
+
 dep('rubygems with no docs') {
   met? {
     File.exists?("/etc/gemrc") &&

@@ -3,6 +3,20 @@ dep 'core software' do
     on :linux, 'vim.managed', 'curl.managed', 'htop.managed', 'jnettop.managed', 'screen.managed', 'nmap.managed', 'tree.managed'
   }
 end
+
+dep 'wget.managed' do
+  installs {
+    via :apt, 'wget'
+  }
+  provides "wget"
+end
+
+dep('vim.managed') {
+  installs {
+    via :apt, 'vim'
+  }
+  provides 'vim'
+}
 dep 'nmap.managed'
 dep 'screen.managed'
 dep 'jnettop.managed' do
