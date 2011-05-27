@@ -27,6 +27,7 @@ dep 'passwordless ssh logins' do
     shell "id -gn #{var(:username)}"
   end
   met? {
+    sudo "mkdir -p '#{ssh_dir}'"
     shell("touch '#{ssh_dir / 'authorized_keys'}'")
     sudo "grep '#{var(:your_ssh_public_key)}' '#{ssh_dir / 'authorized_keys'}'"
   }
