@@ -59,8 +59,12 @@ dep('chef solo configuration') {
 }
 
 dep('chef bootstrap configuration') {
-  met?{ File.exists?("~/chef.json") }
+  def chef_json_path
+    File.expand_path("~/chef.json")
+  end
+  
+  met?{ File.exists?(chef_json_path) }
   meet {
-    render_erb 'chef/chef.json.erb', :to => '~/chef.json', :perms => '755', :sudo => false
+    render_erb 'chef/chef.json.erb', :to => chef_json_path, :perms => '755', :sudo => false
   }
 }
