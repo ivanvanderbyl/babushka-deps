@@ -14,12 +14,9 @@ dep 'chef user' do
 end
 
 dep('can sudo without password') {
-  def user
-    shell('whoami')
-  end
   requires 'sudo'
-  met? { !sudo('cat /etc/sudoers').split("\n").grep(/^#{user} ALL=(ALL) NOPASSWD:ALL/).empty? }
-  meet { append_to_file "#{user}  ALL=(ALL) NOPASSWD:ALL", '/etc/sudoers', :sudo => true }
+  met? { !sudo('cat /etc/sudoers').split("\n").grep(/^#{var(:username)} ALL=(ALL) NOPASSWD:ALL/).empty? }
+  meet { append_to_file "#{var(:username)}  ALL=(ALL) NOPASSWD:ALL", '/etc/sudoers', :sudo => true }
 }
 
 dep 'passwordless ssh logins' do
