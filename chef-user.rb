@@ -3,8 +3,35 @@ dep 'chef user' do
     set :username, 'deploy'
   }
   
-  requires 'admins can sudo', 'user exists with password', 'passwordless ssh logins'
+  requires [
+    'system',
+    'user exists with password', 
+    'admins can sudo', 
+    'can sudo without password', 
+    'passwordless ssh logins',
+    'secured system'
+  ]
 end
+
+dep 'system' do
+  requires 'set.locale', 'hostname', 'tmp cleaning grace period', 'core software'
+end
+
+dep 'secured system' do
+  requires 'secured ssh logins', 'lax host key checking', 'admins can sudo'
+  setup {
+    unmeetable "This dep has to be run as root." unless shell('whoami') == 'root'
+  }
+end
+
+dep('can sudo without password') {
+  def user
+    shell('whoami')
+  end
+  requires 'sudo'
+  met? { !sudo('cat /etc/sudoers').split("\n").grep(/^#{user} ALL=(ALL) NOPASSWD:ALL/).empty? }
+  meet { append_to_file "#{user}  ALL=(ALL) NOPASSWD:ALL", '/etc/sudoers', :sudo => true }
+}
 
 dep 'passwordless ssh logins' do
   def ssh_dir

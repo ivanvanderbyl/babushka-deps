@@ -7,7 +7,7 @@
 
 dep("chef server") {
   requires {
-    on :ubuntu, 'opscode apt source added', 'rabbitmq-server.managed', 'vim.managed', 'chef.managed', 'chef-server.managed'
+    on :ubuntu, 'hostname', 'opscode apt source added', 'rabbitmq-server.managed', 'vim.managed', 'chef.managed', 'chef-server.managed'
   }
 }
 
@@ -24,6 +24,7 @@ dep("opscode apt source added") {
     shell 'sudo apt-get update'
   }
 }
+
 
 dep 'wget.managed' do
   installs {
