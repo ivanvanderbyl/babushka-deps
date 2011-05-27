@@ -3,7 +3,7 @@ dep 'chef user' do
     set :username, 'deploy'
   }
   
-  requires 'user exists with password', 'passwordless ssh logins'
+  requires 'admins can sudo', 'user exists with password', 'passwordless ssh logins'
 end
 
 dep 'passwordless ssh logins' do
