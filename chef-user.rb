@@ -15,7 +15,7 @@ end
 
 dep('can sudo without password') {
   requires 'sudo'
-  met? { !sudo('cat /etc/sudoers').split("\n").grep(/^#{var(:username)} ALL=(ALL) NOPASSWD:ALL/).empty? }
+  met? { !sudo('cat /etc/sudoers').split("\n").grep(/(^#{var(:username)})?.(NOPASSWD:ALL)/).empty? }
   meet { append_to_file "#{var(:username)}  ALL=(ALL) NOPASSWD:ALL", '/etc/sudoers', :sudo => true }
 }
 
