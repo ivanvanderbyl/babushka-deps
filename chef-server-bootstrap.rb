@@ -53,7 +53,7 @@ dep('chef solo') {
 dep('chef solo configuration') {
   met?{ File.exists?("/etc/chef/solo.rb") }
   meet {
-    shell("mkdir -p /etc/chef")
+    shell("mkdir -p /etc/chef", :sudo => true)
     render_erb 'chef/solo.rb.erb', :to => '/etc/chef/solo.rb', :perms => '755', :sudo => true
   }
 }
