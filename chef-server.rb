@@ -44,10 +44,31 @@ dep('chef.managed') {
   provides %w(chef-client knife)
 }
 
-dep('chef server.managed') {
+dep('chef-server.managed') {
   requires 'chef.managed'
   installs {
     via :apt, 'chef-server'
   }
   provides %w(chef-server chef-server-webui chef-solr)
+}
+
+dep('rabbitmq-server.managed') {
+  requires {
+    on :ubuntu, 'updated rabbitmq source'
+  }
+  
+  installs {
+    via :apt, 'rabbitmq-server'
+  }
+  
+  met? { in_path? 'rabbitmq-server >= 2.4' }
+}
+
+dep('updated rabbitmq source') {
+  met? { File.exists? "/etc/apt/sources.list.d/rabbitmq.list"}
+  meet {
+    shell 'echo "deb http://www.rabbitmq.com/debian/ testing main" | sudo tee /etc/apt/sources.list.d/rabbitmq.list'
+    shell 'wget -qO - http://www.rabbitmq.com/rabbitmq-signing-key-public.asc | sudo apt-key add -'
+    shell 'sudo apt-get update'
+  }
 }
