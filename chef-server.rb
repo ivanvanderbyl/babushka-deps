@@ -6,7 +6,9 @@
 # sudo apt-get install chef
 
 dep("chef server") {
-  requires 'opscode apt source added'
+  requires {
+    on :ubuntu, 'opscode apt source added', 'rabbitmq-server.managed', 'vim.managed', 'chef.managed', 'chef-server.managed'
+  }
 }
 
 dep("opscode apt source added") {
@@ -61,7 +63,8 @@ dep('rabbitmq-server.managed') {
     via :apt, 'rabbitmq-server'
   }
   
-  met? { in_path? 'rabbitmq-server >= 2.4' }
+  provides %w(rabbitmq-server rabbitmqctl)  
+  # met? { in_path? 'rabbitmq-server >= 2.4' }
 }
 
 dep('updated rabbitmq source') {
