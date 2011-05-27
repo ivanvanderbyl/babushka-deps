@@ -5,13 +5,13 @@
 # sudo apt-get update
 # sudo apt-get install chef
 
-dep("chef server.managed") {
+dep("chef server") {
   requires 'opscode apt source added'
 }
 
 dep("opscode apt source added") {
   requires {
-    on :ubuntu, 'wget'
+    on :ubuntu, 'wget.managed'
   }
   
   met? { File.exists? "/etc/apt/sources.list.d/opscode.list" }
