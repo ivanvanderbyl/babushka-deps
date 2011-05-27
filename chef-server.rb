@@ -23,8 +23,9 @@ dep("opscode apt source added") {
   }
 }
 
-dep 'wget' do
+dep 'wget.managed' do
   installs {
     via :apt, 'wget'
   }
+  provides "wget"
 end
