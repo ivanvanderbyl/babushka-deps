@@ -46,7 +46,7 @@ dep('chef solo') {
     false
   }
   meet {
-    shell('chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-latest.tar.gz', :sudo => true)
+    log_shell "Downloading latest chef bootstrap", 'chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-latest.tar.gz', :spinner => true, :sudo => !File.writable?("/etc/chef/solo.rb")
   }
 }
 
