@@ -41,7 +41,6 @@ dep 'secured ssh logins' do
 end
 
 dep 'lax host key checking' do
-  requires 'sed.managed'
   met? { grep /^StrictHostKeyChecking[ \t]+no/, ssh_conf_path(:ssh) }
   meet { change_with_sed 'StrictHostKeyChecking', 'yes', 'no', ssh_conf_path(:ssh) }
 end
