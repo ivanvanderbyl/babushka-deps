@@ -29,3 +29,25 @@ dep 'wget.managed' do
   }
   provides "wget"
 end
+
+dep('vim.managed') {
+  installs {
+    via :apt, 'vim'
+  }
+  provides 'vim'
+}
+
+dep('chef.managed') {
+  installs {
+    via :apt, 'chef'
+  }
+  provides %w(chef-client knife)
+}
+
+dep('chef-server.managed') {
+  requires 'chef.managed'
+  installs {
+    via :apt, 'chef-server'
+  }
+  provides %w(chef-client knife chef-server chef-server-api chef-server-webui chef-solr chef-expander)
+}
