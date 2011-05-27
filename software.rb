@@ -5,6 +5,7 @@ dep 'core software' do
   }
 end
 
+dep 'htop.managed'
 dep 'tree.managed'
 dep 'vim.managed'
 dep 'wget.managed'
