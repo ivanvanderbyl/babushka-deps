@@ -5,8 +5,8 @@ dep 'chef user' do
   
   requires [
     'system',
+    'admins can sudo',
     'user exists with password', 
-    'admins can sudo', 
     'can sudo without password', 
     'passwordless ssh logins',
     'secured system'
