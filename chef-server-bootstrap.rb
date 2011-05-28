@@ -112,6 +112,6 @@ dep('bootstrapped chef installed') {
   }
   
   met?{
-    in_path? "chef-client >= #{chef_version}"
+    in_path? ["chef-client >= #{chef_version}", 'chef-server', 'chef-solr']
   }
 }
