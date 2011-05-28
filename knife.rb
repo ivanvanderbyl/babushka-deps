@@ -29,10 +29,10 @@ dep('knife configured.knife'){
   ]
   
   met?{
-    File.exists?(knife_directory / 'solo.rb')
+    File.exists?(knife_directory / 'knife.rb')
   }
   meet {
-    render_erb 'chef/knife.rb.erb', :to => knife_directory / 'solo.rb', :perms => '755', :sudo => false
+    render_erb 'chef/knife.rb.erb', :to => knife_directory / 'knife.rb', :perms => '755', :sudo => false
   }
 }
 
