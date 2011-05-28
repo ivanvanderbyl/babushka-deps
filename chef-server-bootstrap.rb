@@ -40,6 +40,10 @@ meta :chef do
   def chef_couchdb_running?
     is_listening_on_port?("5984")
   end
+  
+  def web_ui_enabled?
+    confirm("Enable Chef Web UI (chef-server-webui)", :default => 'y', :otherwise => "Skipping web UI")
+  end
 end
 
 dep('bootstrap chef server with rubygems') {
@@ -116,9 +120,9 @@ dep('chef bootstrap configuration.chef') {
       'bsd' => 'Prints a message with the chef-client command to use in rc.local.'
     }
   
-  define_var :web_ui_enabled,
-    :message => "Enable Chef Web UI?",
-    :default => "Y"
+  # define_var :web_ui_enabled,
+  #   :message => "Enable Chef Web UI?",
+  #   :default => "Y"
     
   met?{ File.exists?(chef_json_path) }
   meet {
@@ -126,7 +130,7 @@ dep('chef bootstrap configuration.chef') {
       "chef"=>{
         "server_url"=>"http://localhost:4000", 
         "server_fqdn"=> hostname, 
-        "webui_enabled"=> var(:web_ui_enabled).upcase == "Y",
+        "webui_enabled"=> web_ui_enabled?,
         "init_style"=> var(:init_style),
         "client_interval"=>1800
       }, 
@@ -152,7 +156,7 @@ dep('bootstrapped chef installed.chef') {
     in_path?("chef-client >= #{var(:chef_version)}") and
     in_path?("chef-server") and
     in_path?("chef-solr >= #{var(:chef_version)}") and
-    (var(:web_ui_enabled).upcase == "Y" ? (chef_web_ui_running? and in_path?("chef-server-webui >= #{var(:chef_version)}")) : true) and
+    (web_ui_enabled? ? (chef_web_ui_running? and in_path?("chef-server-webui")) : true) and
     chef_server_running? and
     chef_rabbitmq_running? and
     chef_solr_running? and
