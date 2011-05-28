@@ -28,7 +28,6 @@ dep('chef client bootstrap configuration.chef') {
   
   met?{ File.exists?(chef_json_path) }
   meet {
-    shell("export CHEF_SERVER=#{var(:chef_server_url)}")
     json = {
       "chef"=>{
         "server_fqdn"=> var(:chef_server_url), 
