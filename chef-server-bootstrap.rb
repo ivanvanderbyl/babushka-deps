@@ -1,8 +1,8 @@
 meta :chef do
-  def chef_version
-    var(:chef_version, :default => "0.10.0")
-  end
-  
+  # def chef_version
+  #   var(:chef_version, :default => "0.10.0")
+  # end
+  # 
   def chef_json_path
     File.expand_path("~/chef.json")
   end
@@ -43,6 +43,8 @@ meta :chef do
 end
 
 dep('bootstrap chef server with rubygems') {
+  define_var(:chef_version, :defailt => "0.10.0", :message => "What version of Chef do you want to install?")
+  
   requires [
     'hostname',
     'ruby',
@@ -79,11 +81,11 @@ dep('chef install dependencies.managed') {
 }
 
 dep('gems.chef') {
-  requires ['chef.gem.chef', 'ohai.gem']
+  requires ['chef.gem', 'ohai.gem']
 }
 
-dep('chef.gem.chef'){
-  installs "chef #{chef_version}"
+dep('chef.gem'){
+  installs "chef #{var(:chef_version)}"
   provides 'chef-client'
 }
 
@@ -141,16 +143,16 @@ dep('chef bootstrap configuration.chef') {
 dep('bootstrapped chef installed.chef') {
   meet {
     log_shell "Downloading and running bootstrap", 
-        "chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-#{chef_version}.tar.gz", 
+        "chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-#{var(:chef_version)}.tar.gz", 
         :spinner => true, 
         :sudo => !File.writable?("/etc/chef/solo.rb")
   }
   
   met?{
-    in_path?("chef-client >= #{chef_version}") and
-    in_path?("chef-server >= #{chef_version}") and
-    in_path?("chef-solr >= #{chef_version}") and
-    (var(:web_ui_enabled).upcase == "Y" ? (chef_web_ui_running? and in_path?("chef-server-webui >= #{chef_version}")) : true) and
+    in_path?("chef-client >= #{var(:chef_version)}") and
+    in_path?("chef-server >= #{var(:chef_version)}") and
+    in_path?("chef-solr >= #{var(:chef_version)}") and
+    (var(:web_ui_enabled).upcase == "Y" ? (chef_web_ui_running? and in_path?("chef-server-webui >= #{var(:chef_version)}")) : true) and
     chef_server_running? and
     chef_rabbitmq_running? and
     chef_solr_running? and
