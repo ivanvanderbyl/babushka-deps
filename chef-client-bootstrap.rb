@@ -12,7 +12,8 @@ dep('bootstrap chef client'){
     'rubygems with no docs',
     'gems.chef',
     'chef solo configuration.chef',
-    'chef client bootstrap configuration.chef'
+    'chef client bootstrap configuration.chef',
+    'bootstrapped chef installed.chef'
   ]
 }
 
