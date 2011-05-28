@@ -1,8 +1,4 @@
 meta :chef do
-  # def chef_version
-  #   var(:chef_version, :default => "0.10.0")
-  # end
-  # 
   def chef_json_path
     File.expand_path("~/chef.json")
   end
@@ -120,10 +116,6 @@ dep('chef bootstrap configuration.chef') {
       'bsd' => 'Prints a message with the chef-client command to use in rc.local.'
     }
   
-  # define_var :web_ui_enabled,
-  #   :message => "Enable Chef Web UI?",
-  #   :default => "Y"
-    
   met?{ File.exists?(chef_json_path) }
   meet {
     json = {

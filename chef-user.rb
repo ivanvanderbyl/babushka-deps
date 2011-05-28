@@ -68,6 +68,7 @@ dep 'user exists' do
     var(:username, :default => 'deploy')
   end
   setup {
+    unmeetable("You cannot call your user 'chef' - this name is reserved for chef") if username == "chef"
     define_var :home_dir_base, :default => L{
       username['.'] ? '/srv/http' : '/home'
     }

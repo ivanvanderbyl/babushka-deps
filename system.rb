@@ -19,7 +19,7 @@ dep 'tmp cleaning grace period', :for => :ubuntu do
 end
 
 dep 'secured ssh logins' do
-  requires 'sshd.managed'
+  requires ['sshd.managed', 'passwordless ssh logins']
   met? {
     # -o NumberOfPasswordPrompts=0
     output = failable_shell('ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no nonexistentuser@localhost').stderr
