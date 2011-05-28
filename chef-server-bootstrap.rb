@@ -60,6 +60,10 @@ dep('bootstrap chef server with rubygems') {
   setup {
     unmeetable "This dep cannot be run as root. Please run as your chef user, which can be setup using the dep 'chef user'" if shell('whoami') == 'root'
   }
+  
+  after {
+    call_task 'registered knife client'
+  }
 }
 
 dep('bootstrapped chef') { requires 'bootstrap chef server with rubygems' }

@@ -8,7 +8,7 @@ meta :knife do
   end
 end
 
-dep('knife client') { requires 'knife client registered.knife'}
+dep('registered knife client') { requires 'knife client registered.knife'}
 
 dep('knife client registered.knife') {
   requires "knife configured.knife"
