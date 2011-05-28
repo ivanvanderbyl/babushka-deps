@@ -1,3 +1,5 @@
+require "json"
+
 dep('bootstrap chef server with rubygems') {
   requires [
     'hostname',
@@ -21,7 +23,7 @@ dep('bootstrap chef server with rubygems') {
   }
 }
 
-dep('bootstrap chef') { requires 'bootstrap chef server with rubygems' }
+dep('bootstrapped chef') { requires 'bootstrap chef server with rubygems' }
 
 dep('rubygems with no docs') {
   met? {
@@ -70,11 +72,7 @@ dep('chef bootstrap configuration') {
   
   define_var :web_ui_enabled,
     :message => "Enable Chef Web UI?",
-    :default => "Y",
-    :choice_descriptions => {
-      'Y' => "Enabled",
-      'N' => "Disabled"
-    }
+    :default => "Y"
     
   def chef_json_path
     File.expand_path("~/chef.json")
