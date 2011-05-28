@@ -65,7 +65,7 @@ end
 
 dep 'user exists' do
   def username
-    var(:username, :default => 'chef')
+    var(:username, :default => 'deploy')
   end
   setup {
     define_var :home_dir_base, :default => L{
