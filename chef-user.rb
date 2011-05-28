@@ -1,8 +1,4 @@
 dep 'chef user' do
-  setup {
-    set :username, 'deploy'
-  }
-  
   requires [
     'system',
     'admins can sudo',
@@ -15,13 +11,13 @@ end
 
 dep('can sudo without password') {
   requires 'sudo'
-  met? { !sudo('cat /etc/sudoers').split("\n").grep(/(^#{var(:username)})?.(NOPASSWD:ALL)/).empty? }
+  met? { !sudo('cat /etc/sudoers').split("\n").grep(/(^#{var(:username, :default => 'chef')})?.(NOPASSWD:ALL)/).empty? }
   meet { append_to_file "#{var(:username)}  ALL=(ALL) NOPASSWD:ALL", '/etc/sudoers', :sudo => true }
 }
 
 dep 'passwordless ssh logins' do
   def ssh_dir
-    "~#{var(:username)}" / '.ssh'
+    "~#{var(:username, :default => 'chef')}" / '.ssh'
   end
   def group
     shell "id -gn #{var(:username)}"
@@ -60,7 +56,7 @@ end
 dep 'user exists with password' do
   requires 'user exists'
   on :linux do
-    met? { shell('sudo cat /etc/shadow')[/^#{var(:username)}:[^\*!]/] }
+    met? { shell('sudo cat /etc/shadow')[/^#{var(:username, :default => 'chef')}:[^\*!]/] }
     meet {
       sudo "echo -e '#{var(:password)}\n#{var(:password)}' | passwd #{var(:username)}"
     }
@@ -70,29 +66,9 @@ end
 dep 'user exists' do
   setup {
     define_var :home_dir_base, :default => L{
-      var(:username)['.'] ? '/srv/http' : '/home'
+      var(:username, :default => 'chef')['.'] ? '/srv/http' : '/home'
     }
   }
-  on :osx do
-    met? { !shell("dscl . -list /Users").split("\n").grep(var(:username)).empty? }
-    meet {
-      homedir = var(:home_dir_base) / var(:username)
-      {
-        'Password' => '*',
-        'UniqueID' => (501...1024).detect {|i| (Etc.getpwuid i rescue nil).nil? },
-        'PrimaryGroupID' => 'admin',
-        'RealName' => var(:username),
-        'NFSHomeDirectory' => homedir,
-        'UserShell' => '/bin/bash'
-      }.each_pair {|k,v|
-        # /Users/... here is a dscl path, not a filesystem path.
-        sudo "dscl . -create #{'/Users' / var(:username)} #{k} '#{v}'"
-      }
-      sudo "mkdir -p '#{homedir}'"
-      sudo "chown #{var(:username)}:admin '#{homedir}'"
-      sudo "chmod 701 '#{homedir}'"
-    }
-  end
   on :linux do
     met? { grep(/^#{var(:username)}:/, '/etc/passwd') }
     meet {
