@@ -1,6 +1,6 @@
 dep 'hostname', :for => :linux do
   def hostname
-    shell 'hostname -f'
+    var(:hostname, :default => shell('hostname -f'))
   end
   met? {
     stored_hostname = '/etc/hostname'.p.read

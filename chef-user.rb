@@ -64,13 +64,16 @@ dep 'user exists with password' do
 end
 
 dep 'user exists' do
+  def username
+    var(:username, :default => 'chef')
+  end
   setup {
     define_var :home_dir_base, :default => L{
-      var(:username, :default => 'chef')['.'] ? '/srv/http' : '/home'
+      username['.'] ? '/srv/http' : '/home'
     }
   }
   on :linux do
-    met? { grep(/^#{var(:username)}:/, '/etc/passwd') }
+    met? { grep(/^#{username}:/, '/etc/passwd') }
     meet {
       sudo "mkdir -p #{var :home_dir_base}" and
       sudo "useradd -m -s /bin/bash -b #{var :home_dir_base} -G admin #{var(:username)}" and
