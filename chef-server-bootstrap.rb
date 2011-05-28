@@ -1,3 +1,4 @@
+require "rubygems"
 require "json"
 
 dep('bootstrap chef server with rubygems') {
