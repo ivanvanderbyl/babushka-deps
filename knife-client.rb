@@ -9,9 +9,6 @@ meta :knife do
 end
 
 meta :registered do
-  requires [
-    
-  ]
 end
 
 # This creates a new client to be copied to your local workstation
