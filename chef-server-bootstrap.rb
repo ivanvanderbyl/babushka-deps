@@ -55,7 +55,7 @@ dep('bootstrap chef server with rubygems') {
     'chef solo configuration.chef',
     'chef bootstrap configuration.chef',
     'bootstrapped chef installed.chef',
-    'registered knife client'
+    'local admin client.registered'
   ]
   
   setup {
