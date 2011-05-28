@@ -158,6 +158,7 @@ dep('bootstrapped chef installed.chef') {
       success &= chef_solr_running?
       success &= chef_couchdb_running?
     end
-    return success
+    
+    success
   }
 }
