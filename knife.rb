@@ -21,7 +21,7 @@ dep('knife client registered.knife') {
   
   meet {
     # shell("knife client create #{me} -c #{knife_directory}/knife_initial.rb")
-    shell("sudo knife configure -i --defaults -r #{var(:chef_git_repository_url)} --no-editor -y", :sudo => true).p
+    shell("sudo knife configure -i --defaults -r #{var(:chef_git_repository_url)} --no-editor -y", :sudo => true, :as => me).p
   }
 }
 
