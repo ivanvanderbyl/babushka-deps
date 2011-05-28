@@ -1,8 +1,13 @@
 require "rubygems"
 require "json"
 
+def chef_version
+  var(:chef_version, :default => "0.10.0")
+end
+
 dep('bootstrap chef server with rubygems') {
   requires [
+    'chef user',
     'hostname',
     'ruby',
     'chef install dependencies.managed',
@@ -11,17 +16,9 @@ dep('bootstrap chef server with rubygems') {
     'chef.gem',
     'ohai.gem',
     'chef solo configuration',
-    'chef bootstrap configuration'
-  ],
-  meet {
-    log_shell "Downloading and running bootstrap", 
-        "chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-#{var(:chef_version)}.tar.gz", 
-        :spinner => true, 
-        :sudo => !File.writable?("/etc/chef/solo.rb")
-  },
-  met?{
-    
-  }
+    'chef bootstrap configuration',
+    'bootstrapped chef installed'
+  ]
 }
 
 dep('bootstrapped chef') { requires 'bootstrap chef server with rubygems' }
@@ -43,7 +40,7 @@ dep('chef install dependencies.managed') {
 }
 
 dep('chef.gem'){
-  installs "chef #{var(:chef_version, :default => "0.10.0")}"
+  installs "chef #{chef_version}"
   provides 'chef-client'
 }
 
@@ -100,5 +97,18 @@ dep('chef bootstrap configuration') {
       :input => json,
       :sudo => false
     )
+  }
+}
+
+dep('bootstrapped chef installed') {
+  meet {
+    log_shell "Downloading and running bootstrap", 
+        "chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-#{chef_version}.tar.gz", 
+        :spinner => true, 
+        :sudo => !File.writable?("/etc/chef/solo.rb")
+  }
+  
+  met?{
+    in_path? "chef-client >= #{chef_version}"
   }
 }
