@@ -52,9 +52,9 @@ dep('bootstrap chef server with rubygems') {
     'rubygems',
     'rubygems with no docs',
     'gems.chef',
-    'chef solo configuration',
-    'chef bootstrap configuration',
-    'bootstrapped chef installed'
+    'chef solo configuration.chef',
+    'chef bootstrap configuration.chef',
+    'bootstrapped chef installed.chef'
   ]
   
   setup {
