@@ -19,7 +19,8 @@ dep('knife client registered.knife') {
   }
   
   meet {
-    shell("knife client create #{me} -c #{knife_directory}/knife_initial.rb")
+    # shell("knife client create #{me} -c #{knife_directory}/knife_initial.rb")
+    shell("sudo knife configure -i --defaults -r #{var(:chef_git_repository_url)}", :sudo => true)
   }
 }
 
@@ -33,7 +34,6 @@ dep('knife configured.knife'){
   }
   meet {
     render_erb 'chef/knife.rb.erb', :to => knife_directory / 'knife.rb', :perms => '755', :sudo => false
-    render_erb 'chef/knife_initial.rb.erb', :to => knife_directory / 'knife_initial.rb', :perms => '755', :sudo => false
   }
 }
 
