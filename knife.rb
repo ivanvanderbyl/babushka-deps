@@ -39,6 +39,11 @@ dep('knife configured.knife'){
 dep('chef server keys.knife') {
   requires ['dot chef directory.knife']
   
+  met? {
+    File.exists?(knife_directory / 'webui.pem') and
+    File.exists?(knife_directory / 'validation.pem')
+  }
+  
   meet {
     shell("cp /etc/chef/validation.pem /etc/chef/webui.pem #{knife_directory}", :sudo => true)
   }
