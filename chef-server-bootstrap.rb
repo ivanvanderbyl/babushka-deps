@@ -7,7 +7,6 @@ end
 
 dep('bootstrap chef server with rubygems') {
   requires [
-    'chef user',
     'hostname',
     'ruby',
     'chef install dependencies.managed',
@@ -19,6 +18,10 @@ dep('bootstrap chef server with rubygems') {
     'chef bootstrap configuration',
     'bootstrapped chef installed'
   ]
+  
+  setup {
+    unmeetable "This dep cannot be run as root. Please run as your chef user, which can be setup using the dep 'chef user'" if shell('whoami') == 'root'
+  }
 }
 
 dep('bootstrapped chef') { requires 'bootstrap chef server with rubygems' }
