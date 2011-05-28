@@ -1,5 +1,45 @@
-def chef_version
-  var(:chef_version, :default => "0.10.0")
+meta :chef do
+  def chef_version
+    var(:chef_version, :default => "0.10.0")
+  end
+  
+  def chef_json_path
+    File.expand_path("~/chef.json")
+  end
+  
+  def hostname
+    var(:hostname, :default => shell('hostname -f'))
+  end
+  
+  def is_listening_on_port?(port)
+    shell "netstat -an | grep -E '^tcp.*[.:]#{port} +.*LISTEN'"
+  end
+  
+  def is_process_with_name?(name)
+    shell "ps -u chef -f |grep -E '(^chef)?.(#{name})'"
+  end
+  
+  def chef_server_running?
+    # is_process_with_name?("chef-server (api) : worker") and
+    is_listening_on_port?("4000")
+  end
+  
+  def chef_web_ui_running?
+    is_listening_on_port?("4040")
+  end
+  
+  def chef_rabbitmq_running?
+    is_listening_on_port?("5672") and
+    is_listening_on_port?("4369")
+  end
+  
+  def chef_solr_running?
+    is_listening_on_port?("8983")
+  end
+  
+  def chef_couchdb_running?
+    is_listening_on_port?("5984")
+  end
 end
 
 dep('bootstrap chef server with rubygems') {
@@ -48,7 +88,7 @@ dep('ohai.gem') {
   installs 'ohai'
 }
 
-dep('chef solo configuration') {
+dep('chef solo configuration.chef') {
   met?{ File.exists?("/etc/chef/solo.rb") }
   meet {
     shell("mkdir -p /etc/chef", :sudo => true)
@@ -56,7 +96,7 @@ dep('chef solo configuration') {
   }
 }
 
-dep('chef bootstrap configuration') {
+dep('chef bootstrap configuration.chef') {
   require "rubygems"
   require "json"
   
@@ -75,14 +115,6 @@ dep('chef bootstrap configuration') {
     :message => "Enable Chef Web UI?",
     :default => "Y"
     
-  def chef_json_path
-    File.expand_path("~/chef.json")
-  end
-  
-  def hostname
-    var(:hostname, :default => shell('hostname -f'))
-  end
-  
   met?{ File.exists?(chef_json_path) }
   meet {
     json = {
@@ -103,37 +135,7 @@ dep('chef bootstrap configuration') {
   }
 }
 
-dep('bootstrapped chef installed') {
-  def is_listening_on_port?(port)
-    shell "netstat -an | grep -E '^tcp.*[.:]#{port} +.*LISTEN'"
-  end
-  
-  def is_process_with_name?(name)
-    shell "ps -u chef -f |grep -E '(^chef)?.(#{name})'"
-  end
-  
-  def chef_server_running?
-    # is_process_with_name?("chef-server (api) : worker") and
-    is_listening_on_port?("4000")
-  end
-  
-  def chef_web_ui_running?
-    is_listening_on_port?("4040")
-  end
-  
-  def chef_rabbitmq_running?
-    is_listening_on_port?("5672") and
-    is_listening_on_port?("4369")
-  end
-  
-  def chef_solr_running?
-    is_listening_on_port?("8983")
-  end
-  
-  def chef_couchdb_running?
-    is_listening_on_port?("5984")
-  end
-  
+dep('bootstrapped chef installed.chef') {
   meet {
     log_shell "Downloading and running bootstrap", 
         "chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-#{chef_version}.tar.gz", 
@@ -143,9 +145,9 @@ dep('bootstrapped chef installed') {
   
   met?{
     in_path?("chef-client >= #{chef_version}") and
-    in_path?("chef-server") and
-    in_path?("chef-solr") and
-    chef_web_ui_running? and
+    in_path?("chef-server >= #{chef_version}") and
+    in_path?("chef-solr >= #{chef_version}") and
+    (var(:web_ui_enabled).upcase == "Y" ? (chef_web_ui_running? and in_path?("chef-server-webui >= #{chef_version}")) : true) and
     chef_server_running? and
     chef_rabbitmq_running? and
     chef_solr_running? and
