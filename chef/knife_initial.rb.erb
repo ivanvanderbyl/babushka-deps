@@ -3,9 +3,6 @@ admin_client_key          '<%= knife_directory %>/webui.pem'
 log_level                 :info
 log_location              STDOUT
 node_name                 '<%= me %>'
-client_key                '<%= knife_directory %>/<%= me %>.pem'
 validation_client_name    'chef-validator'
 validation_key            '<%= knife_directory %>/validation.pem'
 chef_server_url           'http://<%= hostname %>:4000'
-cache_type                'BasicFile'
-cache_options( :path => '<%= knife_directory %>/checksums' )
