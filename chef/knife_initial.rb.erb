@@ -1,8 +1,11 @@
 admin_client_name         'chef-webui'
 admin_client_key          '<%= knife_directory %>/webui.pem'
+node_name                 'chef-webui'
+admin                     true
+no_editor                 true
+yes                       true
 log_level                 :info
 log_location              STDOUT
-node_name                 '<%= me %>'
 validation_client_name    'chef-validator'
 validation_key            '<%= knife_directory %>/validation.pem'
 chef_server_url           'http://<%= hostname %>:4000'

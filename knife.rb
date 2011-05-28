@@ -19,7 +19,7 @@ dep('knife client registered.knife') {
   }
   
   meet {
-    shell("knife client create #{me} -a -c #{knife_directory}/knife_initial.rb --no-editor -f #{knife_directory}/#{me}.pem")
+    shell("knife client create #{me} -c #{knife_directory}/knife_initial.rb")
   }
 }
 
