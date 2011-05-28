@@ -22,9 +22,12 @@ dep 'passwordless ssh logins' do
   def group
     shell "id -gn #{var(:username)}"
   end
+  
+  requires 'public key'
+  
   met? {
     sudo "mkdir -p '#{ssh_dir}'"
-    shell("touch '#{ssh_dir / 'authorized_keys'}'")
+    shell("touch '#{ssh_dir / 'authorized_keyss'}'")
     sudo "grep '#{var(:your_ssh_public_key)}' '#{ssh_dir / 'authorized_keys'}'"
   }
   before {
@@ -43,7 +46,7 @@ end
 dep 'public key' do
   met? { grep /^ssh-dss/, '~/.ssh/id_dsa.pub' }
   meet { 
-    log shell("ssh-keygen -t dsa -f ~/.ssh/id_dsa -N ''") 
+    log shell("ssh-keygen -t dsa -f ~/.ssh/id_dsa -N ''", :sudo => true, :as => var(:username)) 
   }
 end
 

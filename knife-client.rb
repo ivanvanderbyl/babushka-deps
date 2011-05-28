@@ -33,7 +33,10 @@ dep('external admin client.registered') {
 
 # This creates a new client for an external server
 dep('external client.registered') {
-  
+  meet {
+    # chef_server_url
+    
+  }
 }
 
 # This creates a new admin client on the chef server as your *deploy* user

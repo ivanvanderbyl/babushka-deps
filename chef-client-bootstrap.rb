@@ -15,6 +15,7 @@ dep('bootstrap chef client'){
     'gems.chef',
     'chef solo configuration.chef',
     'chef client bootstrap configuration.chef',
+    'chef client configuration.chef',
     'bootstrapped chef installed.chef'
   ]
 }
@@ -27,6 +28,7 @@ dep('chef client bootstrap configuration.chef') {
   
   met?{ File.exists?(chef_json_path) }
   meet {
+    shell("export CHEF_SERVER=#{var(:chef_server_url)}")
     json = {
       "chef"=>{
         "server_fqdn"=> var(:chef_server_url), 
@@ -42,3 +44,10 @@ dep('chef client bootstrap configuration.chef') {
   }
 }
 
+dep('chef client configuration.chef'){
+  met?{ File.exists?("/etc/chef/client.rb") }
+  meet {
+    shell("mkdir -p /etc/chef", :sudo => true)
+    render_erb 'chef/client.rb.erb', :to => '/etc/chef/client.rb', :perms => '755', :sudo => true
+  }
+}
