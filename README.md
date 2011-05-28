@@ -1,8 +1,8 @@
 Install Chef with Babushka
 ==========================
---
-This is a snippet from my [blog post "Bootstrapping Chef in one command with Babushka"](http://ivanvanderbyl.github.com/2011/05/28/bootstrapping-chef-with-babushka.html)
---
+
+**This is a snippet from my [blog post "Bootstrapping Chef in one command with Babushka"](http://ivanvanderbyl.github.com/2011/05/28/bootstrapping-chef-with-babushka.html)**
+
 
 Install wget if not already installed:
 
