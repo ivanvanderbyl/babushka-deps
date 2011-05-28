@@ -19,7 +19,7 @@ dep('knife client registered.knife') {
   }
   
   meet {
-    shell("knife client create #{me} -a -c #{knife_directory}/knife.rb --no-editor -f #{knife_directory}/#{me}.pem")
+    shell("knife client create #{me} -a -c #{knife_directory}/knife_initial.rb --no-editor -f #{knife_directory}/#{me}.pem")
   }
 }
 
@@ -33,6 +33,7 @@ dep('knife configured.knife'){
   }
   meet {
     render_erb 'chef/knife.rb.erb', :to => knife_directory / 'knife.rb', :perms => '755', :sudo => false
+    render_erb 'chef/knife_initial.rb.erb', :to => knife_directory / 'knife_initial.rb', :perms => '755', :sudo => false
   }
 }
 
