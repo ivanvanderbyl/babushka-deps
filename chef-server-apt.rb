@@ -5,7 +5,7 @@
 # sudo apt-get update
 # sudo apt-get install chef
 
-dep("chef server") {
+dep("chef server from apt") {
   requires {
     on :ubuntu, 'hostname', 'opscode apt source added', 'rabbitmq-server.managed', 'vim.managed', 'chef.managed', 'chef-server.managed'
   }

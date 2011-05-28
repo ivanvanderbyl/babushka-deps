@@ -8,7 +8,6 @@ dep('rabbitmq-server.managed') {
   }
   
   provides %w(rabbitmq-server rabbitmqctl)  
-  # met? { in_path? 'rabbitmq-server >= 2.4' }
 }
 
 dep('updated rabbitmq source') {
