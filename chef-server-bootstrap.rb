@@ -59,6 +59,7 @@ dep('bootstrap chef server with rubygems') {
   ]
   
   setup {
+    set :server_install, true
     unmeetable "This dep cannot be run as root. Please run as your chef user, which can be setup using the dep 'chef user'" if shell('whoami') == 'root'
   }
 }
@@ -146,13 +147,17 @@ dep('bootstrapped chef installed.chef') {
   }
   
   met?{
-    in_path?("chef-client >= #{var(:chef_version)}") and
-    in_path?("chef-server") and
-    in_path?("chef-solr >= #{var(:chef_version)}") and
-    (web_ui_enabled? ? (chef_web_ui_running? and in_path?("chef-server-webui")) : true) and
-    chef_server_running? and
-    chef_rabbitmq_running? and
-    chef_solr_running? and
-    chef_couchdb_running?
+    success = in_path?("chef-client >= #{var(:chef_version)}")
+    
+    if var(:server_install) == true
+      success &= in_path?("chef-server")
+      success &= in_path?("chef-solr >= #{var(:chef_version)}")
+      success &= (web_ui_enabled? ? (chef_web_ui_running? and in_path?("chef-server-webui")) : true)
+      success &= chef_server_running?
+      success &= chef_rabbitmq_running?
+      success &= chef_solr_running?
+      success &= chef_couchdb_running?
+    end
+    return success
   }
 }
