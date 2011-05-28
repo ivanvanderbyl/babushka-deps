@@ -14,13 +14,14 @@ dep('knife client registered.knife') {
   requires "knife configured.knife"
   
   met?{
-    shell('knife client list') and
-    shell("knife client list |grep -E '#{shell('whoami')}$'")
+    File.exists?(knife_directory / "deploy.pem") and
+    shell('knife client list').p and
+    shell("knife client list |grep -E '#{shell('whoami')}$'").p
   }
   
   meet {
     # shell("knife client create #{me} -c #{knife_directory}/knife_initial.rb")
-    shell("sudo knife configure -i --defaults -r #{var(:chef_git_repository_url)}", :sudo => true)
+    shell("sudo knife configure -i --defaults -r #{var(:chef_git_repository_url)}", :sudo => true).p
   }
 }
 
