@@ -79,10 +79,10 @@ dep('chef install dependencies.managed') {
 }
 
 dep('gems.chef') {
-  requires ['chef.gem', 'ohai.gem']
+  requires ['chef.gem.chef', 'ohai.gem']
 }
 
-dep('chef.gem'){
+dep('chef.gem.chef'){
   installs "chef #{chef_version}"
   provides 'chef-client'
 }
