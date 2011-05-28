@@ -104,6 +104,36 @@ dep('chef bootstrap configuration') {
 }
 
 dep('bootstrapped chef installed') {
+  def is_listening_on_port?(port)
+    shell "netstat -an | grep -E '^tcp.*[.:]#{port} +.*LISTEN'"
+  end
+  
+  def is_process_with_name?(name)
+    shell "ps -u chef -f |grep -E '(^chef)?.(#{name})'"
+  end
+  
+  def chef_server_running?
+    # is_process_with_name?("chef-server (api) : worker") and
+    is_listening_on_port?("4000")
+  end
+  
+  def chef_web_ui_running?
+    is_listening_on_port?("4040")
+  end
+  
+  def chef_rabbitmq_running?
+    is_listening_on_port?("5672") and
+    is_listening_on_port?("4369")
+  end
+  
+  def chef_solr_running?
+    is_listening_on_port?("8983")
+  end
+  
+  def chef_couchdb_running?
+    is_listening_on_port?("5984")
+  end
+  
   meet {
     log_shell "Downloading and running bootstrap", 
         "chef-solo -c /etc/chef/solo.rb -j ~/chef.json -r http://s3.amazonaws.com/chef-solo/bootstrap-#{chef_version}.tar.gz", 
@@ -112,6 +142,13 @@ dep('bootstrapped chef installed') {
   }
   
   met?{
-    in_path? ["chef-client >= #{chef_version}", 'chef-server', 'chef-solr']
+    in_path?("chef-client >= #{chef_version}") and
+    in_path?("chef-server") and
+    in_path?("chef-solr") and
+    chef_web_ui_running? and
+    chef_server_running? and
+    chef_rabbitmq_running? and
+    chef_solr_running? and
+    chef_couchdb_running?
   }
 }
