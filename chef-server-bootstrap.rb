@@ -49,8 +49,7 @@ dep('bootstrap chef server with rubygems') {
     'chef install dependencies.managed',
     'rubygems',
     'rubygems with no docs',
-    'chef.gem',
-    'ohai.gem',
+    'gems.chef',
     'chef solo configuration',
     'chef bootstrap configuration',
     'bootstrapped chef installed'
@@ -77,6 +76,10 @@ dep('rubygems with no docs') {
 dep('chef install dependencies.managed') {
   installs %w[irb build-essential wget ssl-cert]
   provides %w[wget make irb gcc]
+}
+
+dep('gems.chef') {
+  requires ['chef.gem', 'ohai.gem']
 }
 
 dep('chef.gem'){
