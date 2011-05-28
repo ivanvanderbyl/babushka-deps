@@ -1,6 +1,3 @@
-require "rubygems"
-require "json"
-
 def chef_version
   var(:chef_version, :default => "0.10.0")
 end
@@ -60,6 +57,9 @@ dep('chef solo configuration') {
 }
 
 dep('chef bootstrap configuration') {
+  require "rubygems"
+  require "json"
+  
   define_var :init_style,
     :message => "Which init style would you like to use?",
     :default => 'init',
