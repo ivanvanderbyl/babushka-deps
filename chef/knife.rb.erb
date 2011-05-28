@@ -1,0 +1,9 @@
+log_level                :info
+log_location             STDOUT
+node_name                '<%= shell("whoami") %>'
+client_key               '<%= knife_directory %>/deploy.pem'
+validation_client_name   'chef-validator'
+validation_key           '<%= knife_directory %>/validation.pem'
+chef_server_url          'http://<%= hostname %>:4000'
+cache_type               'BasicFile'
+cache_options( :path => '<%= knife_directory %>/checksums' )
