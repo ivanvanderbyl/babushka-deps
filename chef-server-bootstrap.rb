@@ -150,7 +150,7 @@ dep('bootstrapped chef installed.chef') {
   
   met?{
     in_path?("chef-client >= #{var(:chef_version)}") and
-    in_path?("chef-server >= #{var(:chef_version)}") and
+    in_path?("chef-server") and
     in_path?("chef-solr >= #{var(:chef_version)}") and
     (var(:web_ui_enabled).upcase == "Y" ? (chef_web_ui_running? and in_path?("chef-server-webui >= #{var(:chef_version)}")) : true) and
     chef_server_running? and
