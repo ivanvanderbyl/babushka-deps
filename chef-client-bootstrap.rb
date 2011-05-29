@@ -62,3 +62,15 @@ dep('chef client configuration.chef'){
     render_erb 'chef/client.rb.erb', :to => '/etc/chef/client.rb', :perms => '755', :sudo => true
   }
 }
+
+dep('chef client on startup'){
+  met?{
+    File.exists?("/etc/init/chef-client.conf") &&
+    File.exists?("/etc/init.d/chef-client")
+  }
+  
+  meet {
+    shell("cp #{gem_root}/chef-#{var(:chef_version)}/distro/debian/etc/init/chef-client.conf /etc/init/chef-client.conf", :sudo => true)
+    shell("cp #{gem_root}/chef-#{var(:chef_version)}/distro/debian/etc/init/chef-client.conf /etc/init.d/chef-client", :sudo => true)
+  }
+}
