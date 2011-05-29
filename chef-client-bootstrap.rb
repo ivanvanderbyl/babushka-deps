@@ -70,6 +70,7 @@ dep('chef client on startup'){
   }
   
   meet {
+    log("Copying start scripts from #{gem_root}/chef-#{var(:chef_version)}")
     shell("cp #{gem_root}/chef-#{var(:chef_version)}/distro/debian/etc/init/chef-client.conf /etc/init/chef-client.conf", :sudo => true)
     shell("cp #{gem_root}/chef-#{var(:chef_version)}/distro/debian/etc/init/chef-client.conf /etc/init.d/chef-client", :sudo => true)
   }
