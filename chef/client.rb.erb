@@ -1,1 +1,11 @@
-chef_server_url     "<%= var(:chef_server_url) %>"
+log_level        :info
+log_location     STDOUT
+
+chef_server_url  "<%= var(:chef_server_url) %>"
+validation_client_name "chef-validator"
+# Using default node name"
+
+file_backup_path   "/srv/chef/backup"
+file_cache_path    "/srv/chef/cache"
+
+pid_file           "/srv/chef/run/client.pid"

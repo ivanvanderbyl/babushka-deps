@@ -45,7 +45,7 @@ dep('chef client bootstrap configuration.chef') {
         "client_interval"=>1800,
         "init_style"=> var(:init_style)
       },
-      "recipes" => "chef::client"
+      "recipes" => "chef-client::config"
     }.to_json
     
     shell("cat > '#{chef_json_path}'",
