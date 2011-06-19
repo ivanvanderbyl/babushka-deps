@@ -29,8 +29,8 @@ dep('chef client registered') {
     shell("rm -f /etc/chef/validation.pem")
   }
 
-  unmeetable {
-    !File.exists?("/etc/chef/validation.pem")
+  setup {
+    unmeetable("You must copy /etc/chef/validation.pem to this node from your chef server before registering a node.") unless File.exists?("/etc/chef/validation.pem")
   }
 }
 
