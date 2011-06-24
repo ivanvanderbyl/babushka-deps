@@ -47,7 +47,7 @@ dep 'public key' do
   def ssh_dir
     "/home/#{var(:username, :default => 'chef')}" / '.ssh'
   end
-  met? { grep /^ssh-dss/, ssh_dir + '/id_rsa.pub' }
+  met? { grep /^ssh-rsa/, ssh_dir + '/id_rsa.pub' }
   meet {
     log shell("ssh-keygen -t rsa -f #{ssh_dir}/id_rsa -N ''", :sudo => true, :as => var(:username))
   }
