@@ -44,9 +44,12 @@ dep 'passwordless ssh logins' do
 end
 
 dep 'public key' do
-  met? { grep /^ssh-dss/, '~/.ssh/id_dsa.pub' }
+  def ssh_dir
+    "/home/#{var(:username, :default => 'chef')}" / '.ssh'
+  end
+  met? { grep /^ssh-dss/, ssh_dir /'id_rsa.pub' }
   meet {
-    log shell("ssh-keygen -t dsa -f ~/.ssh/id_dsa -N ''", :sudo => true, :as => var(:username))
+    log shell("ssh-keygen -t rsa -f #{ssh_dir}/.ssh/id_rsa -N ''", :sudo => true, :as => var(:username))
   }
 end
 
