@@ -2,8 +2,8 @@ dep 'chef user' do
   requires [
     'system',
     'admins can sudo',
-    'user exists with password', 
-    'can sudo without password', 
+    'user exists with password',
+    'can sudo without password',
     'passwordless ssh logins',
     'secured system'
   ]
@@ -17,14 +17,14 @@ dep('can sudo without password') {
 
 dep 'passwordless ssh logins' do
   def ssh_dir
-    "~#{var(:username, :default => 'chef')}" / '.ssh'
+    "/home/#{var(:username, :default => 'chef')}" / '.ssh'
   end
   def group
     shell "id -gn #{var(:username)}"
   end
-  
+
   requires 'public key'
-  
+
   met? {
     sudo "mkdir -p '#{ssh_dir}'"
     shell("touch '#{ssh_dir / 'authorized_keyss'}'")
@@ -45,8 +45,8 @@ end
 
 dep 'public key' do
   met? { grep /^ssh-dss/, '~/.ssh/id_dsa.pub' }
-  meet { 
-    log shell("ssh-keygen -t dsa -f ~/.ssh/id_dsa -N ''", :sudo => true, :as => var(:username)) 
+  meet {
+    log shell("ssh-keygen -t dsa -f ~/.ssh/id_dsa -N ''", :sudo => true, :as => var(:username))
   }
 end
 

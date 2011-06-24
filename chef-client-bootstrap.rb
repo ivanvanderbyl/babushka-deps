@@ -25,7 +25,7 @@ dep('chef client registered') {
 
   met? { false }
   meet {
-    shell("sudo chef-client")
+    !shell("sudo chef-client")
     shell("rm -f /etc/chef/validation.pem")
   }
 
