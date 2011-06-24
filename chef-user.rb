@@ -45,7 +45,7 @@ end
 
 dep 'public key' do
   def ssh_dir
-    "/home/#{var(:username, :default => 'chef')}" / '.ssh'
+    "/home/#{var(:username, :default => 'deploy')}" / '.ssh'
   end
   met? { grep /^ssh-rsa/, ssh_dir + '/id_rsa.pub' }
   meet {
