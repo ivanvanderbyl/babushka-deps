@@ -97,5 +97,5 @@ dep 'vagrant user exists' do
 end
 
 dep('vagrant host setup') {
-  requires ['vagrant host dependencies', 'vagrant user exists' ]
+  requires ['vagrant host dependencies', 'vagrant user exists', 'ruby19.src' ]
 }
