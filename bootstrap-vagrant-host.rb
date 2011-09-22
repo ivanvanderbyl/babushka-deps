@@ -81,7 +81,7 @@ dep 'vagrant user exists' do
     'vagrant'
   end
 
-  requires ['admins can sudo']
+  requires ['admins can sudo', 'can sudo without password', 'passwordless ssh logins']
 
   on :linux do
     met? { grep(/^#{username}:/, '/etc/passwd') }
