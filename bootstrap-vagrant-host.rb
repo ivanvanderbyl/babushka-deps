@@ -44,6 +44,7 @@ dep('rvm installed') {
 
   meet {
     shell('wget http://rvm.beginrescueend.com/install/rvm -O ~/rvm.sh')
+    shell('chmod +x ~/rvm.sh')
     shell('~/rvm.sh')
     shell('rm -f ~/rvm.sh')
     shell("mkdir -p /etc/profile.d", :sudo => true)
