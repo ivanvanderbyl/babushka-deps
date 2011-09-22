@@ -54,7 +54,7 @@ dep('rvm installed') {
 
 meta(:rvm) {
   accepts_list_for :rubies
-  
+
   template {
     requires ['rvm installed']
 
@@ -78,19 +78,15 @@ dep('rubies installed.rvm') {
 
 dep 'vagrant user exists' do
   def username
-    var(:username, :default => 'vagrant')
+    'vagrant'
   end
-  setup {
-    define_var :home_dir_base, :default => L{
-      username['.'] ? '/srv/http' : '/home'
-    }
-  }
+
   on :linux do
     met? { grep(/^#{username}:/, '/etc/passwd') }
     meet {
-      sudo "mkdir -p #{var :home_dir_base}" and
-      sudo "useradd -m -s /bin/bash -b #{var :home_dir_base} -G admin #{var(:username)}" and
-      sudo "chmod 701 #{var(:home_dir_base) / var(:username)}"
+      sudo "mkdir -p /home" and
+      sudo "useradd -m -s /bin/bash -b /home -G #{username}" and
+      sudo "chmod 701 #{'/home' / username}"
     }
   end
 end
