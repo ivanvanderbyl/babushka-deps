@@ -43,10 +43,10 @@ dep('rvm installed') {
   }
 
   meet {
-    sudo('wget http://rvm.beginrescueend.com/install/rvm -O ~/rvm.sh', :as => 'vagrant')
-    sudo('chmod +x ~/rvm.sh', :as => 'vagrant')
-    sudo('~/rvm.sh', :as => 'vagrant')
-    sudo('rm -f ~/rvm.sh', :as => 'vagrant')
+    sudo('wget http://rvm.beginrescueend.com/install/rvm -O /home/vagrant/rvm.sh', :as => 'vagrant')
+    sudo('chmod +x /home/vagrant/rvm.sh', :as => 'vagrant')
+    sudo('/home/vagrant/rvm.sh', :as => 'vagrant')
+    sudo('rm -f /home/vagrant/rvm.sh', :as => 'vagrant')
     sudo("mkdir -p /etc/profile.d")
     render_erb 'rvm/rvm.sh.erb', :to => '/etc/profile.d/rvm.sh', :perms => '755', :sudo => true
   }
@@ -81,11 +81,13 @@ dep 'vagrant user exists' do
     'vagrant'
   end
 
+  requires ['admins can sudo']
+
   on :linux do
     met? { grep(/^#{username}:/, '/etc/passwd') }
     meet {
       sudo "mkdir -p /home" and
-      sudo "useradd -m -s /bin/bash -b /home #{username}" and
+      sudo "useradd -m -s /bin/bash -b /home -G admin #{username}" and
       sudo "chmod 701 #{'/home' / username}"
     }
   end
