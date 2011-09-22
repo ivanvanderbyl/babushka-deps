@@ -39,16 +39,16 @@ dep('vagrant host dependencies') {
 
 dep('rvm installed') {
   met? {
-    shell("type rvm | head -1", :user => 'vagrant') == 'function'
+    sudo("type rvm | head -1", :as => 'vagrant') == 'function'
   }
 
   meet {
-    shell('wget http://rvm.beginrescueend.com/install/rvm -O ~/rvm.sh', :user => 'vagrant')
-    shell('chmod +x ~/rvm.sh', :user => 'vagrant')
-    shell('~/rvm.sh', :user => 'vagrant')
-    shell('rm -f ~/rvm.sh', :user => 'vagrant')
-    shell("mkdir -p /etc/profile.d", :sudo => true, :user => 'vagrant')
-    render_erb 'rvm/rvm.sh.erb', :to => '/etc/profile.d/rvm.sh', :perms => '755', :sudo => true, :user => 'vagrant'
+    sudo('wget http://rvm.beginrescueend.com/install/rvm -O ~/rvm.sh', :as => 'vagrant')
+    sudo('chmod +x ~/rvm.sh', :as => 'vagrant')
+    sudo('~/rvm.sh', :as => 'vagrant')
+    sudo('rm -f ~/rvm.sh', :as => 'vagrant')
+    sudo("mkdir -p /etc/profile.d")
+    render_erb 'rvm/rvm.sh.erb', :to => '/etc/profile.d/rvm.sh', :perms => '755', :sudo => true
   }
 }
 
@@ -60,13 +60,13 @@ meta(:rvm) {
 
     met? {
       rubies.select { |ruby_version|
-        shell("rvm list | grep #{ruby_version}", :user => 'vagrant')
+        shell("rvm list | grep #{ruby_version}", :as => 'vagrant')
       }.size == rubies.size
     }
 
     meet {
       rubies.each do |ruby_version|
-        shell("rvm install #{ruby_version}", :user => 'vagrant')
+        shell("rvm install #{ruby_version}", :as => 'vagrant')
       end
     }
   }
@@ -92,5 +92,5 @@ dep 'vagrant user exists' do
 end
 
 dep('vagrant host setup') {
-  requires ['vagrant host dependencies', 'vagrant user exists', 'rvm installed', 'rubies installed.rvm']
+  requires ['vagrant host dependencies', 'vagrant user exists' ] #, 'rvm installed', 'rubies installed.rvm']
 }
