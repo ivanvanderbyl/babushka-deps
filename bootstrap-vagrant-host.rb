@@ -54,19 +54,21 @@ dep('rvm installed') {
 
 meta(:rvm) {
   accepts_list_for :rubies
+  
+  template {
+    requires ['rvm installed']
 
-  # requires ['rvm installed']
+    met? {
+      rubies.select { |ruby_version|
+        shell("rvm list | grep #{ruby_version}", :user => 'vagrant')
+      }.size == rubies.size
+    }
 
-  met? {
-    rubies.select { |ruby_version|
-      shell("rvm list | grep #{ruby_version}", :user => 'vagrant')
-    }.size == rubies.size
-  }
-
-  meet {
-    rubies.each do |ruby_version|
-      shell("rvm install #{ruby_version}", :user => 'vagrant')
-    end
+    meet {
+      rubies.each do |ruby_version|
+        shell("rvm install #{ruby_version}", :user => 'vagrant')
+      end
+    }
   }
 }
 
