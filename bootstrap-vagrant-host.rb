@@ -1,33 +1,33 @@
 packages = [
-  'lsof.managed',
-  'iptables.managed',
-  'jwhois.managed',
-  'whois.managed',
-  'curl.managed',
-  'wget.managed',
-  'rsync.managed',
-  'jnettop.managed',
-  'nmap.managed',
-  'traceroute.managed',
-  'ethtool.managed',
-  'iproute.managed',
-  'iputils-ping.managed',
-  'netcat-openbsd.managed',
-  'tcpdump.managed',
-  'elinks.managed',
-  'lynx.managed',
-  'bind9-host.managed'
+  'lsof',
+  'iptables',
+  'jwhois',
+  'whois',
+  'curl',
+  'wget',
+  'rsync',
+  'jnettop',
+  'nmap',
+  'traceroute',
+  'ethtool',
+  'iproute',
+  'iputils-ping',
+  'netcat-openbsd',
+  'tcpdump',
+  'elinks',
+  'lynx',
+  'bind9-host'
 ].each do |package|
-  dep package
+  dep [package, 'managed'].join('.')
 end
 
-dep('bootstrap vagrant host'){
-  requires packages | ['git']
-
-  met? { false }
-
-  meet {}
-}
+# dep('bootstrap vagrant host'){
+#   requires packages | ['git']
+#
+#   met? { false }
+#
+#   meet {}
+# }
 
 dep('vagrant host dependencies.managed') {
   installs packages | %w[build-essential]
