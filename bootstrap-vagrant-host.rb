@@ -85,7 +85,7 @@ dep 'vagrant user exists' do
     met? { grep(/^#{username}:/, '/etc/passwd') }
     meet {
       sudo "mkdir -p /home" and
-      sudo "useradd -m -s /bin/bash -b /home -G #{username}" and
+      sudo "useradd -m -s /bin/bash -b /home" and
       sudo "chmod 701 #{'/home' / username}"
     }
   end
