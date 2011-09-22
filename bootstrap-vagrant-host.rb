@@ -30,6 +30,6 @@ end
 # }
 
 dep('vagrant host dependencies.managed') {
-  installs packages | %w[build-essential]
-  provides %w[lsof iptables jwhois whois curl wget rsync jnettop nmap traceroute ethtool iproute iputils netcat tcpdump elinks lynx bind9 make gcc]
+  requires packages.map { |p| "#{p}.managed" }
+  # provides %w[lsof jwhois whois curl wget rsync jnettop nmap traceroute ethtool iproute iputils netcat tcpdump elinks lynx bind9 make gcc]
 }
