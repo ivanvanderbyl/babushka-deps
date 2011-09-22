@@ -55,7 +55,7 @@ dep('rvm installed') {
 meta(:rvm) {
   accepts_list_for :rubies
 
-  requires ['rvm installed']
+  # requires ['rvm installed']
 
   met? {
     rubies.select { |ruby_version|
