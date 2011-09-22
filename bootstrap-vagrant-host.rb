@@ -19,7 +19,7 @@ packages = [
   dep [package, 'managed'].join('.')
 end
 
-packages_without_binary = ['iproute', 'iputils-ping'].each { |p|
+packages_without_binary = ['iproute', 'iputils-ping', 'netcat'].each { |p|
   dep [p, 'managed'].join('.') do
     provides []
   end
