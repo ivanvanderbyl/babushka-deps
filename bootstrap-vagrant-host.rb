@@ -12,13 +12,12 @@ packages = [
   'ethtool',
   'tcpdump',
   'elinks',
-  'lynx',
-  'bind9-host'
+  'lynx'
 ].each do |package|
   dep [package, 'managed'].join('.')
 end
 
-packages_without_binary = ['iproute', 'iputils-ping', 'netcat-openbsd', 'libreadline5-dev', 'libssl-dev', 'libxml2-dev', 'libxslt1-dev', 'zlib1g-dev'].each { |p|
+packages_without_binary = ['iproute', 'iputils-ping', 'netcat-openbsd', 'bind9-host', 'libreadline5-dev', 'libssl-dev', 'libxml2-dev', 'libxslt1-dev', 'zlib1g-dev'].each { |p|
   dep [p, 'managed'].join('.') do
     provides []
   end
