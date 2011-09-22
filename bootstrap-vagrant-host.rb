@@ -37,18 +37,19 @@ dep('vagrant host dependencies') {
   requires (packages + packages_without_binary).map { |p| "#{p}.managed" }
 }
 
-dep('rvm system wide') {
+dep('rvm installed') {
   met? {
     shell("type rvm | head -1") == 'function'
   }
 
   meet {
-    shell('bash < <( curl -L -B http://rvm.beginrescueend.com/install/rvm )')
+    shell('wget http://rvm.beginrescueend.com/install/rvm -O ~/rvm.sh')
+    shell('~/rvm.sh')
     shell("mkdir -p /etc/profile.d", :sudo => true)
     render_erb 'rvm/rvm.sh.erb', :to => '/etc/profile.d/rvm.sh', :perms => '755', :sudo => true
   }
 }
 
 dep('vagrant host setup') {
-  requires ['vagrant host dependencies', 'rvm system wide']
+  requires ['vagrant host dependencies', 'rvm installed']
 }
