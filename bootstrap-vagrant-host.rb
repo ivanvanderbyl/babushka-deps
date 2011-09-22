@@ -45,6 +45,7 @@ dep('rvm installed') {
   meet {
     shell('wget http://rvm.beginrescueend.com/install/rvm -O ~/rvm.sh')
     shell('~/rvm.sh')
+    shell('rm -f ~/rvm.sh')
     shell("mkdir -p /etc/profile.d", :sudo => true)
     render_erb 'rvm/rvm.sh.erb', :to => '/etc/profile.d/rvm.sh', :perms => '755', :sudo => true
   }
