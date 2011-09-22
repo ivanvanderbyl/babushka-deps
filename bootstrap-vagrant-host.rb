@@ -10,7 +10,6 @@ packages = [
   'nmap',
   'traceroute',
   'ethtool',
-  'netcat-openbsd',
   'tcpdump',
   'elinks',
   'lynx',
@@ -19,7 +18,7 @@ packages = [
   dep [package, 'managed'].join('.')
 end
 
-packages_without_binary = ['iproute', 'iputils-ping', 'netcat'].each { |p|
+packages_without_binary = ['iproute', 'iputils-ping', 'netcat-openbsd'].each { |p|
   dep [p, 'managed'].join('.') do
     provides []
   end
