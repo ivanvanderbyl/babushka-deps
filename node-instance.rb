@@ -5,6 +5,7 @@ dep('node provisioned', :hostname_str, :chef_version) {
     'ruby19.src',
     'rubygems',
     'rubygems with no docs',
+    'zlib headers.managed',
     'gems.chef'.with(chef_version)
   ]
 }
