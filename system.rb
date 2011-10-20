@@ -2,8 +2,8 @@ def ssh_conf_path file
   "/etc#{'/ssh' if Babushka::Base.host.linux?}/#{file}_config"
 end
 
-dep 'system' do
-  requires 'hostname', 'tmp cleaning grace period', 'core software'
+dep 'system', :hostname_str do
+  requires 'hostname'.with(hostname_str), 'tmp cleaning grace period', 'core software'
 end
 
 dep 'secured system' do
