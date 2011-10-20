@@ -1,4 +1,4 @@
-dep 'hostname', :for => :linux do
+dep 'hostname', :hostname_str, :for => :linux do
   def hostname
     var(:hostname_str, :default => shell('hostname -f'))
   end
