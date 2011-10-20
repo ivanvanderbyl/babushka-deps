@@ -82,11 +82,11 @@ dep('chef install dependencies.managed') {
   provides %w[wget make gcc]
 }
 
-dep('gems.chef') {
-  requires ['chef.gem', 'ohai.gem']
+dep('gems.chef', :chef_version) {
+  requires ['chef.gem'.with(chef_version), 'ohai.gem']
 }
 
-dep('chef.gem'){
+dep('chef.gem', :chef_version){
   installs "chef #{var(:chef_version, :default => '0.10.4')}"
   provides 'chef-client'
 }
