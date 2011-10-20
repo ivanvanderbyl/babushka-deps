@@ -4,7 +4,7 @@ meta :chef do
   end
 
   def hostname
-    var(:hostname, :default => shell('hostname -f'))
+    var(:hostname_str, :default => shell('hostname -f'))
   end
 
   def is_listening_on_port?(port)

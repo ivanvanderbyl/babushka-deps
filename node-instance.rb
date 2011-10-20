@@ -1,6 +1,6 @@
-dep('node provisioned', :hostname, :chef_version) {
+dep('node provisioned', :hostname_str, :chef_version) {
   requires [
-    'system'.with(hostname),
+    'system'.with(:hostname_str),
     'ruby',
     'chef install dependencies.managed'.with(chef_version),
     'rubygems',
