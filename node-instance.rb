@@ -2,7 +2,7 @@ dep('node provisioned', :hostname_str, :chef_version) {
   requires [
     # 'system'.with(:hostname_str),
     'hostname'.with(hostname_str),
-    'core software'
+    'core software',
     'chef install dependencies.managed',
     'vagrant host dependencies',
     'zlib headers.managed',
