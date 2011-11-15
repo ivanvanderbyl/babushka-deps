@@ -8,6 +8,7 @@ dep 'postgres has a unaccenting stemming dictionary', :db_name do
     'unaccenting installed'.with(db_name),
     'english stemming dictionary installed'.with(db_name),
     'text search configuration installed'.with(db_name)
+  ]
 end
 
 dep 'unaccenting installed' do
