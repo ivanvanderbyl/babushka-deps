@@ -4,10 +4,11 @@ dep 'postgres has a unaccenting stemming dictionary', :db_name do
   define_var :dictionary_name, :default => 'english_stemmer'
   define_var :search_configuration_name, :default => 'unaccenting_english_stemmer'
   define_var :postgres_shared_path, :default => '/usr/share/postgresql/9.0'
+  define_var :db_name, :default => db_name
   requires [
-    'unaccenting installed'.with(db_name),
-    'english stemming dictionary installed'.with(db_name),
-    'text search configuration installed'.with(db_name)
+    'unaccenting installed',
+    'english stemming dictionary installed',
+    'text search configuration installed'
   ]
 end
 
