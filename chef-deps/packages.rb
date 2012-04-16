@@ -34,6 +34,7 @@ dep 'image_science.gem' do
   requires 'freeimage.managed'
   provides []
 end
+dep 'iotop.managed'
 dep 'java.managed' do
   installs { via :apt, 'sun-java6-jre' }
   after { shell "set -Ux JAVA_HOME /usr/lib/jvm/java-6-sun" }
@@ -43,7 +44,8 @@ dep 'jnettop.managed' do
 end
 dep 'readline headers.managed' do
   installs {
-    via :apt, 'libreadline5-dev'
+    on :lenny, 'libreadline5-dev'
+    via :apt, 'libreadline6-dev'
   }
   provides []
 end
@@ -69,6 +71,7 @@ dep 'mdns.managed' do
   }
   provides []
 end
+dep 'lsof.managed'
 dep 'memcached.managed'
 dep 'ncurses.managed' do
   installs {
@@ -88,10 +91,10 @@ dep 'pcre.managed' do
   }
   provides 'pcre-config'
 end
+dep 'pv.managed'
 dep 'rcconf.managed' do
   installs { via :apt, 'rcconf' }
 end
-dep 'screen.managed'
 dep 'sed.managed' do
   installs {
     via :brew, 'gnu-sed'
@@ -109,6 +112,8 @@ dep 'sshd.managed' do
     via :apt, 'openssh-server'
   }
 end
+dep 'tmux.managed'
+dep 'traceroute.managed'
 dep 'tree.managed'
 dep 'vim.managed'
 dep 'wget.managed'
@@ -126,3 +131,4 @@ dep 'zlib headers.managed' do
   }
   provides []
 end
+
