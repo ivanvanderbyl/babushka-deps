@@ -2,4 +2,4 @@
 
 cd .. # up from .git/
 unset GIT_DIR # otherwise `git` commands can't see other repos
-babushka --colour 'benhoskings:ready for update.repo' git_ref_data="$(cat /dev/stdin)"
+babushka --colour 'ivanvanderbyl:ready for update.repo' git_ref_data="$(cat /dev/stdin)"
