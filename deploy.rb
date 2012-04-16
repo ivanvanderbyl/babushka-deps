@@ -43,7 +43,6 @@ dep 'valid git_ref_data.repo', :git_ref_data do
 end
 
 dep 'clean.repo' do
-  requires 'no public directory'
   setup {
     # Clear git's internal cache, which sometimes says the repo is dirty when it isn't.
     repo.repo_shell "git diff"
