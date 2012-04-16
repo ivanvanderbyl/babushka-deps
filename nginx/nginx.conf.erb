@@ -1,0 +1,44 @@
+user www www;
+worker_processes 8;
+pid /opt/nginx/logs/nginx.pid;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  sendfile on;
+  tcp_nopush on;
+  tcp_nodelay off;
+  keepalive_timeout 30;
+  client_max_body_size 8m;
+  server_names_hash_max_size 8192;
+
+  include mime.types;
+  default_type application/octet-stream;
+
+  log_format main '$remote_addr - [$time_local] ($http_host) "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$http_x_forwarded_for"';
+  access_log logs/access.log main;
+
+  gzip on;
+  gzip_min_length 1024;
+  #gzip_vary on;
+  gzip_comp_level 9;
+  gzip_proxied any;
+  gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+  gzip_buffers 16 8k; # handle gzipped output up to 128kB
+
+  # Don't edit this to serve content; instead, add a vhost.
+  server {
+    listen [::]:80;
+    server_name localhost;
+
+    location / {
+      root html;
+      index index.html;
+    }
+  }
+
+  # Pull in all enabled vhosts
+  include vhosts/on/*.conf;
+}
