@@ -48,8 +48,16 @@ dep 'clean.repo' do
     repo.repo_shell "git diff"
   }
   met? { repo.clean? || unmeetable!("The remote repo has local changes.") }
-  meet { repo.reset_hard! }
 end
+
+# dep 'clean.repo' do
+#   setup {
+#     # Clear git's internal cache, which sometimes says the repo is dirty when it isn't.
+#     repo.repo_shell "git diff"
+#   }
+#   met? { repo.clean? || unmeetable!("The remote repo has local changes.") }
+#   meet { repo.reset_hard! }
+# end
 
 dep 'branch exists.repo', :branch do
   met? {

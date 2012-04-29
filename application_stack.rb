@@ -4,12 +4,13 @@ dep('application deployable') {
   }
 
   requires [
-            'benhoskings:system',
-            'benhoskings:ruby.src',
-            'benhoskings:user setup for provisioning',
-            'testpilot:core dependencies',
-            'testpilot:build essential installed',
-            'testpilot:postgresql installed']
+    'benhoskings:system',
+    'ivanvanderbyl:ruby.src',
+    'benhoskings:user setup for provisioning',
+    'testpilot:core dependencies',
+    'testpilot:build essential installed',
+    'benhoskings:postgres.managed'
+  ]
 }
 
 dep('application deployed'){
@@ -17,6 +18,9 @@ dep('application deployed'){
     unmeetable! "This dep cannot be run as root." if shell('whoami') == 'root'
   }
 
-  requires ['ivanvanderbyl:web repo']
+  requires [
+    'ivanvanderbyl:web repo',
+    'postgres access'
+  ]
 
 }
