@@ -64,7 +64,7 @@ dep 'vhost configured.nginx', :host_type, :domain, :domain_aliases, :path, :list
   path.default("~#{domain}/current".p) if shell?('id', domain)
 
   requires 'configured.nginx'.with(nginx_prefix)
-  # requires 'unicorn configured'.with(path) if host_type == 'unicorn'
+  requires 'unicorn configured'.with(path) if host_type == 'unicorn'
 
   met? {
     Babushka::Renderable.new(vhost_conf).from?(dependency.load_path.parent / "nginx/vhost.conf.erb") and
