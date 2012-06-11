@@ -40,3 +40,9 @@ dep('postgresql.managed') {
               pg_ctlcluster pg_dropcluster pg_dump pg_dumpall pg_lsclusters
               pg_restore pg_upgradecluster)
 }
+
+dep 'postgres access', :username do
+  requires 'postgresql.managed'
+  met? { !sudo("echo '\\du' | #{which 'psql'}", :as => 'postgres').split("\n").grep(/^\W*\b#{username}\b/).empty? }
+  meet { sudo "createuser -SdR #{username}", :as => 'postgres' }
+end
