@@ -9,7 +9,7 @@ dep('application deployable') {
     'benhoskings:user setup for provisioning',
     'testpilot:core dependencies',
     'testpilot:build essential installed',
-    'testpilot:libv8 installed',
+    'libv8-dev.managed',
     'benhoskings:postgres.managed'
   ]
 }
@@ -27,4 +27,8 @@ dep('application deployed', :domain){
     'vhost enabled.nginx'.with('unicorn', domain)
   ]
 
+}
+
+dep('libv8-dev.managed') {
+  provides []
 }
