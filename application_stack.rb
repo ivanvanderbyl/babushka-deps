@@ -9,18 +9,22 @@ dep('application deployable') {
     'benhoskings:user setup for provisioning',
     'testpilot:core dependencies',
     'testpilot:build essential installed',
+    'testpilot:libv8 installed',
     'benhoskings:postgres.managed'
   ]
 }
 
-dep('application deployed'){
+dep('application deployed', :domain){
   setup {
     unmeetable! "This dep cannot be run as root." if shell('whoami') == 'root'
   }
 
   requires [
-    'ivanvanderbyl:web repo',
-    'postgres access'
+    'benhoskings:passwordless sudo',
+    'benhoskings:secured ssh logins',
+    'ivanvanderbyl:running.nginx',
+    'postgres access',
+    'vhost enabled.nginx'.with('unicorn', domain)
   ]
 
 }
