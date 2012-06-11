@@ -36,4 +36,7 @@ dep('libv8-dev.managed') {
 
 dep('postgresql.managed') {
   installs ['postgresql-9.1']
+  provides %w(pg pg_basebackup pg_config pg_createcluster
+              pg_ctlcluster pg_dropcluster pg_dump pg_dumpall pg_lsclusters
+              pg_restore pg_updatedicts pg_upgradecluster)
 }
