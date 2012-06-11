@@ -11,6 +11,7 @@ dep('application deployable') {
     'testpilot:build essential installed',
     'libv8-dev.managed',
     'benhoskings:core software',
+    'benhoskings:passwordless sudo',
     'postgresql.managed'
   ]
 }
@@ -21,7 +22,6 @@ dep('application deployed', :domain){
   }
 
   requires [
-    'benhoskings:passwordless sudo',
     'benhoskings:secured ssh logins',
     'ivanvanderbyl:running.nginx',
     'postgres access',
