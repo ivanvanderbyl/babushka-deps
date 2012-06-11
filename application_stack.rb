@@ -10,7 +10,8 @@ dep('application deployable') {
     'testpilot:core dependencies',
     'testpilot:build essential installed',
     'libv8-dev.managed',
-    'benhoskings:postgres.managed'
+    'benhoskings:core software',
+    'postgresql.managed'
   ]
 }
 
@@ -31,4 +32,8 @@ dep('application deployed', :domain){
 
 dep('libv8-dev.managed') {
   provides []
+}
+
+dep('postgresql.managed') {
+  installs ['postgresql-9.1']
 }
