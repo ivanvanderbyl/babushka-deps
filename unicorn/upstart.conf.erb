@@ -9,7 +9,7 @@ stop on runlevel [016]
 console owner
 
 chdir <%= root_directory %>
-exec su $USER -c "/usr/local/bin/bundle exec /usr/local/bin/unicorn -c ./config/unicorn/production.rb -D"
+exec su $USER -c "/usr/local/bin/bundle exec /usr/local/bin/unicorn -c ./config/unicorn/production.rb"
 
 respawn
 

@@ -29,9 +29,9 @@ dep('easylodge stack') {
            'vhost enabled.nginx'.with('unicorn', 'easylodge.com.au')
 }
 
-dep('mysql-devel.managed'){
+dep('libmysqlclient15-dev.managed'){
   provides []
-  installs 'libmysqlclient15-dev'
+  installs 'libmysqlclient-dev'
 }
 
 dep('mysql-client.managed') {
