@@ -93,6 +93,7 @@ dep 'pcre.managed' do
 end
 dep 'pv.managed'
 dep 'rcconf.managed' do
+  requires 'dialog.managed'
   installs { via :apt, 'rcconf' }
 end
 dep 'sed.managed' do
@@ -131,4 +132,5 @@ dep 'zlib headers.managed' do
   }
   provides []
 end
+dep('dialog.managed')
 
