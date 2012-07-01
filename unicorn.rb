@@ -53,3 +53,20 @@ dep 'unicorn running', :app_root, :env do
     shell "bundle exec unicorn -D -E #{env} -c config/unicorn.rb", :cd => app_root
   }
 end
+
+dep('unicorn upstart', :name, :path) {
+  def upstart_config
+    "/etc/init/unicorn-#{name}"
+  end
+
+  def user
+    shell('whoami')
+  end
+
+  def root_directory
+    path
+  end
+
+  met? { upstart_config.exists? }
+  meet { render_erb 'unicorn/upstart.conf.erb', :to => upstart_config, :sudo => true }
+}

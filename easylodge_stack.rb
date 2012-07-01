@@ -9,7 +9,7 @@ dep('easylodge stack bootstrap') {
     'benhoskings:user setup for provisioning',
     'testpilot:core dependencies',
     'testpilot:build essential installed',
-    'libv8-dev.managed',
+    'testpilot:nodejs.src',
     'benhoskings:core software',
     'benhoskings:passwordless sudo'
   ]
@@ -20,6 +20,22 @@ dep('easylodge stack') {
     unmeetable! "This dep cannot be run as root." if shell('whoami') == 'root'
   }
 
-  requires 'easylodge stack bootstrap'
-
+  requires 'benhoskings:imagemagick.managed',
+           'mysql-devel.managed',
+           'mysql-client.managed',
+           'benhoskings:mysql.gem',
+           'benhoskings:secured ssh logins',
+           'ivanvanderbyl:running.nginx',
+           'vhost enabled.nginx'.with('unicorn', 'easylodge.com.au')
 }
+
+dep('mysql-devel.managed'){
+  provides []
+  installs 'libmysqlclient15-dev'
+}
+
+dep('mysql-client.managed') {
+  provides ['mysql']
+  installs 'mysql-client'
+}
+
