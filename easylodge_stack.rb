@@ -31,7 +31,6 @@ dep('easylodge stack') {
 
 dep('libmysqlclient15-dev.managed'){
   provides []
-  installs 'libmysqlclient-dev'
 }
 
 dep('mysql-client.managed') {
