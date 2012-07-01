@@ -20,14 +20,15 @@ dep('easylodge stack') {
     unmeetable! "This dep cannot be run as root." if shell('whoami') == 'root'
   }
 
-  requires 'benhoskings:imagemagick.managed',
-           'benhoskings:secured ssh logins',
-           'libmysqlclient-dev.managed',
-           'mysql-client.managed',
-           'ivanvanderbyl:running.nginx',
-           'postgresql.managed',
-           'testpilot:sphinx installed'.with('0.9.9'),
-           'vhost enabled.nginx'
+  requires 'testpilot:core dependencies',
+    'benhoskings:imagemagick.managed',
+    'benhoskings:secured ssh logins',
+    'libmysqlclient-dev.managed',
+    'mysql-client.managed',
+    'ivanvanderbyl:running.nginx',
+    'postgresql.managed',
+    'testpilot:sphinx installed'.with('0.9.9'),
+    'vhost enabled.nginx'
 }
 
 dep('libmysqlclient-dev.managed'){
