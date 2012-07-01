@@ -49,7 +49,7 @@ dep('user can write to usr/local') {
     shell 'whoami'
   end
 
-  met {
+  met? {
     shell? "touch /usr/local/lib/touch-this"
   }
 
