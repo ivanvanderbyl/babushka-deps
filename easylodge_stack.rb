@@ -24,7 +24,7 @@ dep('easylodge stack') {
   requires 'testpilot:core dependencies',
     'benhoskings:imagemagick.managed',
     'benhoskings:secured ssh logins',
-    'user can write to usr/local',
+    'user can write to usr local',
     'libmysqlclient-dev.managed',
     'mysql-client.managed',
     'ivanvanderbyl:running.nginx',
@@ -44,7 +44,7 @@ dep('mysql-client.managed') {
   installs 'mysql-client'
 }
 
-dep('user can write to usr/local') {
+dep('user can write to usr local') {
   def user
     shell 'whoami'
   end
