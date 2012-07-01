@@ -25,6 +25,7 @@ dep('easylodge stack') {
            'libmysqlclient-dev.managed',
            'mysql-client.managed',
            'ivanvanderbyl:running.nginx',
+           'postgresql.managed',
            'testpilot:sphinx installed'.with('0.9.9'),
            'vhost enabled.nginx'.with('unicorn', 'easylodge.com.au')
 }
