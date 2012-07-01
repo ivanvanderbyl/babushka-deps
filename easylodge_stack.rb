@@ -5,7 +5,7 @@ dep('easylodge stack bootstrap') {
 
   requires [
     'benhoskings:system',
-    'ivanvanderbyl:ruby.src'.with('1.9.2-p290'),
+    'ivanvanderbyl:ruby.src'.with('1.9.2','p290'),
     'benhoskings:user setup for provisioning',
     'testpilot:core dependencies',
     'testpilot:build essential installed',
