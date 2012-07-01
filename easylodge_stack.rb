@@ -21,15 +21,16 @@ dep('easylodge stack') {
   }
 
   requires 'benhoskings:imagemagick.managed',
-           'libmysqlclient15-dev.managed',
+           'libmysqlclient-dev.managed',
            'mysql-client.managed',
            'benhoskings:mysql.gem',
            'benhoskings:secured ssh logins',
            'ivanvanderbyl:running.nginx',
+           'testpilot:sphinx installed'.with('0.9.9'),
            'vhost enabled.nginx'.with('unicorn', 'easylodge.com.au')
 }
 
-dep('libmysqlclient15-dev.managed'){
+dep('libmysqlclient-dev.managed'){
   provides []
 }
 
