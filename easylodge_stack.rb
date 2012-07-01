@@ -21,10 +21,9 @@ dep('easylodge stack') {
   }
 
   requires 'benhoskings:imagemagick.managed',
+           'benhoskings:secured ssh logins',
            'libmysqlclient-dev.managed',
            'mysql-client.managed',
-           'benhoskings:mysql.gem',
-           'benhoskings:secured ssh logins',
            'ivanvanderbyl:running.nginx',
            'testpilot:sphinx installed'.with('0.9.9'),
            'vhost enabled.nginx'.with('unicorn', 'easylodge.com.au')
