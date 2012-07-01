@@ -24,6 +24,7 @@ dep('easylodge stack') {
   requires 'testpilot:core dependencies',
     'benhoskings:imagemagick.managed',
     'benhoskings:secured ssh logins',
+    'user can write to usr/local',
     'libmysqlclient-dev.managed',
     'mysql-client.managed',
     'ivanvanderbyl:running.nginx',
@@ -31,7 +32,6 @@ dep('easylodge stack') {
     'testpilot:sphinx installed'.with('0.9.9'),
     'vhost enabled.nginx',
     'prince xml installed',
-    'user can write to usr/local',
     'bundler.gem'
 }
 
