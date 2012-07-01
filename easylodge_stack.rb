@@ -21,7 +21,7 @@ dep('easylodge stack') {
   }
 
   requires 'benhoskings:imagemagick.managed',
-           'mysql-devel.managed',
+           'libmysqlclient15-dev.managed',
            'mysql-client.managed',
            'benhoskings:mysql.gem',
            'benhoskings:secured ssh logins',
