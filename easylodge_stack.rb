@@ -29,7 +29,10 @@ dep('easylodge stack') {
     'ivanvanderbyl:running.nginx',
     'postgresql.managed',
     'testpilot:sphinx installed'.with('0.9.9'),
-    'vhost enabled.nginx'
+    'vhost enabled.nginx',
+    'prince xml installed',
+    'user can write to usr/local',
+    'bundler.gem'
 }
 
 dep('libmysqlclient-dev.managed'){
@@ -41,3 +44,16 @@ dep('mysql-client.managed') {
   installs 'mysql-client'
 }
 
+dep('user can write to usr/local') {
+  def user
+    shell 'whoami'
+  end
+
+  met {
+    shell? "touch /usr/local/lib/touch-this"
+  }
+
+  meet {
+    shell "chown -R #{user}:#{user} /usr/local/", :sudo => true
+  }
+}
