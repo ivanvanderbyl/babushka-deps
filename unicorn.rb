@@ -56,7 +56,7 @@ end
 
 dep('unicorn upstart', :app, :path) {
   def upstart_config
-    "/etc/init/unicorn-#{app}".p
+    "/etc/init/unicorn-#{app}.conf".p
   end
 
   def user
