@@ -5,11 +5,12 @@ dep('application deployable') {
 
   requires [
     'benhoskings:system',
+    'testpilot:ruby dependencies',
     'ivanvanderbyl:ruby.src',
     'benhoskings:user setup for provisioning',
     'testpilot:core dependencies',
     'testpilot:build essential installed',
-    'libv8-dev.managed',
+    'testpilot:nodejs installed',
     'benhoskings:core software',
     'benhoskings:passwordless sudo',
     'postgresql.managed'
@@ -22,16 +23,15 @@ dep('application deployed', :domain){
 libmysqlclient-dev  }
 
   requires [
+    'testpilot:core dependencies',
     'benhoskings:secured ssh logins',
+    'user can write to usr local',
     'ivanvanderbyl:running.nginx',
     'postgres access',
-    'vhost enabled.nginx'.with('unicorn', domain)
+    'vhost enabled.nginx',
+    'bundler.gem'
   ]
 
-}
-
-dep('libv8-dev.managed') {
-  provides []
 }
 
 dep('postgresql.managed') {
