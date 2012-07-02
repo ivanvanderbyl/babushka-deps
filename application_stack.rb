@@ -20,7 +20,7 @@ dep('application deployable') {
 dep('application deployed', :domain){
   setup {
     unmeetable! "This dep cannot be run as root." if shell('whoami') == 'root'
-libmysqlclient-dev  }
+  }
 
   requires [
     'testpilot:core dependencies',
