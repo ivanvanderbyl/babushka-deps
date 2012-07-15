@@ -35,7 +35,7 @@ dep('application deployed', :domain){
 }
 
 dep('postgresql.managed') {
-  installs ['postgresql-9.1', 'postgresql-server-dev-9.1']
+  installs ['postgresql-9.1', 'postgresql-server-dev-9.1', 'postgresql-contrib']
   provides %w(pg pg_basebackup pg_config pg_createcluster
               pg_ctlcluster pg_dropcluster pg_dump pg_dumpall pg_lsclusters
               pg_restore pg_upgradecluster)

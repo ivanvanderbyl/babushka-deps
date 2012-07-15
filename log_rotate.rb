@@ -30,3 +30,15 @@ dep 'rack.logrotate', :username do
   as username
 end
 
+dep('rails.logrotate') do
+  def current_user
+    shell('whoami').strip
+  end
+
+  def home
+    ENV['HOME']
+  end
+
+  renders "logrotate/rails.conf"
+  as current_user
+end
