@@ -1,4 +1,10 @@
-dep('easylodge stack bootstrap') {
+# Configures a blank instance with everything we need to get a stack installed.
+#
+# This dep must be run as root.
+#
+# During this dep you will be asked for your SSH pub key to allow authentication
+# as the user you specify during installation e.g deploy
+dep('easylodge deployable') {
   setup {
     unmeetable! "This dep has to be run as root." unless shell('whoami') == 'root'
   }
