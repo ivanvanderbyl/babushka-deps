@@ -7,6 +7,14 @@ upstream <%= upstream_name %> {
 }
 <% end %>
 
+<% if host_type == 'upstream_proxy' %>
+upstream backend_<%= proxy_name %>  {
+<% upstream_hosts.to_s.split(' ').each do |host| %>
+  server <%= host %> weight=1 max_fails=3 fail_timeout=30s;
+<% end %>
+}
+<% end %>
+
 <% if enable_http[/^y/] %>
 server {
   listen <%= listen_host %>:<%= listen_port %>;

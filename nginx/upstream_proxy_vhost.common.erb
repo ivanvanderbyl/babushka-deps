@@ -1,9 +1,3 @@
-upstream backend_<%= proxy_name %>  {
-<% upstream_hosts.to_s.split(' ').each do |host| %>
-  server <%= host %> weight=1 max_fails=3 fail_timeout=30s;
-<% end %>
-}
-
 server_name <%= server_names.join(' ') %>;
 
 if ($host !~ ^<%= domain.to_s.gsub('.', '\.') %>$) {
