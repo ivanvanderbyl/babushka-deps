@@ -27,7 +27,7 @@ meta :nginx do
 end
 
 dep 'vhost enabled.nginx', :host_type, :domain, :domain_aliases, :path, :listen_host, :listen_port, :proxy_host, :upstream_hosts, :proxy_name, :proxy_port, :nginx_prefix, :enable_http, :enable_https, :force_https do
-  requires 'vhost configured.nginx'.with(host_type, domain, domain_aliases, path, listen_host, listen_port, proxy_host, proxy_port, nginx_prefix, enable_http, enable_https, force_https)
+  requires 'vhost configured.nginx'.with(host_type, domain, domain_aliases, path, listen_host, listen_port, proxy_host, upstream_hosts, proxy_name, proxy_port, nginx_prefix, enable_http, enable_https, force_https)
   met? { vhost_link.exists? }
   meet {
     sudo "mkdir -p #{nginx_prefix / 'conf/vhosts/on'}"
