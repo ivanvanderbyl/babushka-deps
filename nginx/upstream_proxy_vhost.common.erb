@@ -5,8 +5,10 @@ if ($host !~ ^<%= domain.to_s.gsub('.', '\.') %>$) {
 }
 
 location / {
-  proxy_pass            http://backend_<%= proxy_name %>;
-  proxy_redirect        off;
+  proxy_pass                    http://backend_<%= proxy_name %>;
+  proxy_next_upstream           error timeout invalid_header http_500 http_502 http_503 http_404;
+  proxy_pass_request_headers    on;
+  proxy_redirect                off;
 
   proxy_set_header      Host            $host;
   proxy_set_header      X-Real-IP       $remote_addr;
