@@ -1,7 +1,7 @@
 upstream backend_<%= proxy_name %>  {
-<%- upstream_hosts.split(' ').each do |host| %>
+<% upstream_hosts.split(' ').each do |host| %>
   server <%= host %> weight=1 max_fails=3 fail_timeout=30s;
-<%- end %>
+<% end %>
 }
 
 server_name <%= server_names.join(' ') %>;
