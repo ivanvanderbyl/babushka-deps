@@ -45,7 +45,7 @@ dep 'vhost configured.nginx', :host_type, :domain, :domain_aliases, :path, :list
   enable_http.default!('yes')
   enable_https.default('no')
   force_https.default('no')
-  upstream_hosts.default().ask('Upstream proxy hosts (app01:80 app02)')
+  upstream_hosts.default('').ask('Upstream proxy hosts (app01:80 app02)')
 
   def www_aliases
     "#{domain} #{domain_aliases}".split(/\s+/).reject {|d|
