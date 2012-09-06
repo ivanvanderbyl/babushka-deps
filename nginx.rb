@@ -36,7 +36,7 @@ dep 'vhost enabled.nginx', :host_type, :domain, :domain_aliases, :path, :listen_
   after { restart_nginx }
 end
 
-dep 'vhost configured.nginx', :host_type, :domain, :domain_aliases, :path, :listen_host, :listen_port, :proxy_host, :proxy_port, :nginx_prefix, :enable_http, :enable_https, :force_https do
+dep 'vhost configured.nginx', :host_type, :domain, :domain_aliases, :path, :listen_host, :listen_port, :proxy_host, :upstream_hosts, :proxy_name, :proxy_port, :nginx_prefix, :enable_http, :enable_https, :force_https do
   domain_aliases.default('').ask('Domains to alias (no need to specify www. aliases)')
   listen_host.default!('[::]')
   listen_port.default!('80')
@@ -45,6 +45,8 @@ dep 'vhost configured.nginx', :host_type, :domain, :domain_aliases, :path, :list
   enable_http.default!('yes')
   enable_https.default('no')
   force_https.default('no')
+  upstream_hosts.default().ask('Upstream proxy hosts (app01:80 app02)')
+
   def www_aliases
     "#{domain} #{domain_aliases}".split(/\s+/).reject {|d|
       d[/^\*\./] || d[/^www\./]
@@ -60,7 +62,7 @@ dep 'vhost configured.nginx', :host_type, :domain, :domain_aliases, :path, :list
     ).uniq
   end
 
-  host_type.default('unicorn').choose(%w[unicorn proxy static])
+  host_type.default('unicorn').choose(%w[unicorn proxy static upstream_proxy])
   path.default("~#{domain}/current".p) if shell?('id', domain)
 
   requires 'configured.nginx'.with(nginx_prefix)

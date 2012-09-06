@@ -1,0 +1,24 @@
+upstream backend_<%= proxy_name %>  {
+<%- upstream_hosts.split(' ').each do |host| %>
+  server <%= host %> weight=1 max_fails=3 fail_timeout=30s;
+<%- end %>
+}
+
+server_name <%= server_names.join(' ') %>;
+
+if ($host !~ ^<%= domain.to_s.gsub('.', '\.') %>$) {
+  rewrite ^(.*)$ http://<%= domain %>$1 permanent;
+}
+
+location / {
+  proxy_pass            http://backend_<%= proxy_name %>;
+  proxy_redirect        off;
+
+  proxy_set_header      Host            $host;
+  proxy_set_header      X-Real-IP       $remote_addr;
+  proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+
+  client_max_body_size  10m;
+  proxy_buffers         4 32k;
+}
+
