@@ -64,7 +64,7 @@ dep('profile setup', :deploy_to) do
   end
 
   met? {
-    dot_file_path.p.grep(/console/)
+    dot_profile_path.p.grep(/console/)
   }
 
   meet { render_erb 'profile/dot.profile.erb', :to => dot_profile_path, :sudo => false }
