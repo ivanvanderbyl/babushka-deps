@@ -29,6 +29,7 @@ dep('application deployed', :domain){
     'ivanvanderbyl:running.nginx',
     'postgres access',
     'vhost enabled.nginx',
+    'profile setup',
     'bundler.gem'
   ]
 
@@ -45,4 +46,26 @@ dep 'postgres access', :username do
   requires 'postgresql.managed'
   met? { !sudo("echo '\\du' | #{which 'psql'}", :as => 'postgres').split("\n").grep(/^\W*\b#{username}\b/).empty? }
   meet { sudo "createuser -SdR #{username}", :as => 'postgres' }
+end
+
+dep('profile setup', :deploy_to) do
+  deploy_to.default("current")
+
+  def user
+    shell('whoami')
+  end
+
+  def dot_profile_path
+    File.expand_path("~/.profile")
+  end
+
+  def current_path
+    deploy_to
+  end
+
+  met? {
+    dot_file_path.p.grep(/console/)
+  }
+
+  meet { render_erb 'profile/dot.profile.erb', :to => dot_profile_path, :sudo => false }
 end
