@@ -60,7 +60,7 @@ dep('profile setup', :deploy_to) do
   end
 
   def current_path
-    path = deploy_to.gsub(/\/$/, '')
+    path = deploy_to.to_s.gsub(/\/$/, '')
     unless path =~ /^\//
       path = File.expand_path(path)
     end
