@@ -23,19 +23,19 @@ fi
 
 function console {
 	export RAILS_ENV=production
-  cd ~/<%= current_path %>/current && bundle exec rails c
+  cd <%= current_path %>/current && bundle exec rails c
 }
 
 function tail_logs {
-  tail -f -n 100 ~/<%= current_path %>/shared/log/*.log
+  tail -f -n 100 <%= current_path %>/shared/log/*.log
 }
 
 function tail_production_log {
-  tail -f -n 100 ~/<%= current_path %>/shared/log/production.log
+  tail -f -n 100 <%= current_path %>/shared/log/production.log
 }
 
 function unicorn_start {
-  local RAILS_ROOT=~/<%= current_path %>
+  local RAILS_ROOT=<%= current_path %>
   export RAILS_ENV=production
 
   cd $RAILS_ROOT/current && \
