@@ -6,6 +6,8 @@ dep 'ruby trunk.src' do
 end
 
 dep 'ruby.src', :version, :patchlevel do
+  requres 'testpilot:ruby dependencies'
+
   def version_group
     version.to_s.scan(/^\d\.\d/).first
   end

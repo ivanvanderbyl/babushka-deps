@@ -1,4 +1,8 @@
 dep('fresh box') {
+  setup {
+    unmeetable! "This dep has to be run as root." unless shell('whoami') == 'root'
+  }
+
   requires [
     'benhoskings:system',
     'benhoskings:core software',
@@ -9,6 +13,16 @@ dep('fresh box') {
     'user can write to usr local',
     'benhoskings:passwordless ssh logins',
     'automatic updates configured'
+  ]
+}
+
+dep('fresh application deployable') {
+  setup {
+    unmeetable! "This dep cannot be run as root." if shell('whoami') == 'root'
+  }
+
+  requires [
+    'ivanvanderbyl:ruby.src'.with('2.0.0', 'p0')
   ]
 }
 
