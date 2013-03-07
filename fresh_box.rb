@@ -22,7 +22,11 @@ dep('fresh application deployable') {
   }
 
   requires [
-    'ivanvanderbyl:ruby.src'.with('2.0.0', 'p0')
+    'ivanvanderbyl:ruby.src'.with('2.0.0', 'p0'),
+    'ivanvanderbyl:running.nginx',
+    'vhost enabled.nginx',
+    'profile setup',
+    'bundler.gem'
   ]
 }
 
