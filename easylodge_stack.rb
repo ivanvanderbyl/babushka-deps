@@ -56,8 +56,8 @@ dep('user can write to usr local') {
   end
 
   met? {
-    shell? "touch /usr/local/lib/touch-this" &&
-    shell? 'rm /usr/local/lib/touch-this'
+    shell?("touch /usr/local/lib/touch-this") &&
+    shell?('rm /usr/local/lib/touch-this')
   }
 
   meet {
