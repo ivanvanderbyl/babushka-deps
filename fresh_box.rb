@@ -1,4 +1,4 @@
-dep('secure system') {
+dep('fresh box') {
   requires [
     'benhoskings:system',
     'benhoskings:core software',
