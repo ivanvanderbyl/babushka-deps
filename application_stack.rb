@@ -30,7 +30,8 @@ dep('application deployed', :domain){
     'postgres access',
     'vhost enabled.nginx',
     'profile setup',
-    'bundler.gem'
+    'bundler.gem',
+    'testpilot:java installed'
   ]
 
 }

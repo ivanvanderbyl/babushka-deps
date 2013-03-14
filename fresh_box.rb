@@ -25,7 +25,7 @@ dep('fresh application deployable') {
     'ivanvanderbyl:ruby.src'.with('2.0.0', 'p0'),
     'ivanvanderbyl:running.nginx',
     'vhost enabled.nginx',
-    'profile setup',
+    'dot files setup',
     'bundler.gem'
   ]
 }
