@@ -7,6 +7,15 @@ upstream <%= upstream_name %> {
 }
 <% end %>
 
+<% if host_type == 'puma' %>
+<%# It'd be nice if this could be in the unicorn config instead, but it's only valid in the http{ } block. %>
+upstream <%= upstream_name %> {
+  # fail_timeout=0 means we always retry the puma master, since it's
+  # responsible for restarting workers when they fail.
+  server unix:<%= puma_socket %> fail_timeout=0;
+}
+<% end %>
+
 <% if host_type == 'upstream_proxy' %>
 upstream backend_<%= proxy_name %>  {
 <% upstream_hosts.to_s.split(' ').each do |host| %>

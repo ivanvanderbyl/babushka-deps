@@ -15,6 +15,9 @@ meta :nginx do
   def unicorn_socket
     path / 'tmp/sockets/unicorn.socket'
   end
+  def puma_socket
+    path / 'tmp/sockets/puma.socket'
+  end
   def nginx_running?
     shell? "netstat -an | grep -E '^tcp.*[.:]80 +.*LISTEN'"
   end
@@ -62,7 +65,7 @@ dep 'vhost configured.nginx', :host_type, :domain, :domain_aliases, :path, :list
     ).uniq
   end
 
-  host_type.default('unicorn').choose(%w[unicorn proxy static upstream_proxy])
+  host_type.default('unicorn').choose(%w[puma unicorn proxy static upstream_proxy])
   path.default("~#{domain}/current".p) if shell?('id', domain)
 
   requires 'configured.nginx'.with(nginx_prefix)
