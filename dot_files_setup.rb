@@ -4,7 +4,7 @@ dep('dot files setup') {
   end
 
   def local_to_remote_name(file)
-    file.to_s.gsub(/^dot/, '.').split(/\.erb$/).first
+    File.basename(file.to_s.gsub(/^dot/, '.').split(/\.erb$/).first)
   end
 
   def dot_file_path
