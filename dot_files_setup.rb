@@ -11,6 +11,10 @@ dep('dot files setup') {
     File.expand_path(ENV['HOME'])
   end
 
+  def current_path
+    dot_file_path
+  end
+
   met?{
     files.all? do |file|
       Babushka::Renderable.new(dot_file_path / local_to_remote_name(file)).from?(file)
