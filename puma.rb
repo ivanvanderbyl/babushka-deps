@@ -39,11 +39,18 @@ dep('puma apps configured', :deployment_paths) {
     deployment_paths.to_s.split(' ').join("\n")
   end
 
+  def renderable
+    Babushka::Renderable.new(puma_config_path)
+  end
+
   met? {
-    Babushka::Renderable.new(puma_config_path).from?(dependency.load_path.parent / "puma/etc/puma.conf.erb")
+    File.exists?(puma_config_path)
   }
 
   meet {
-    render_erb dependency.load_path.parent / 'puma/etc/puma.conf.erb', :to => puma_config_path, :sudo => true
+    shell("cat > '#{path}'",
+      :input => renderable.send(:render_erb, renderable.path, self)
+      :sudo => true
+    )
   }
 }
