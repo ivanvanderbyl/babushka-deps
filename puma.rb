@@ -48,6 +48,7 @@ dep('puma apps configured', :deployment_paths) {
   end
 
   met? {
+    require 'digest/sha1'
     File.exists?(puma_config_path) &&
     Digest::SHA1.hexdigest(rendered_config) == renderable.send(:sha_of, puma_config_path)
   }
