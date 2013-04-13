@@ -43,6 +43,11 @@ dep('postgresql.managed') {
               pg_restore pg_upgradecluster)
 }
 
+dep('postgresql-dev.managed') {
+  installs ['postgresql-server-dev-9.2', 'postgresql-contrib']
+  provides []
+}
+
 dep 'postgres access', :username do
   requires 'postgresql.managed'
   met? { !sudo("echo '\\du' | #{which 'psql'}", :as => 'postgres').split("\n").grep(/^\W*\b#{username}\b/).empty? }
