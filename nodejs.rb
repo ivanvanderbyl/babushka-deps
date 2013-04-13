@@ -3,3 +3,7 @@ dep 'nodejs.src', :version do
   source "http://nodejs.org/dist/v#{version}/node-v#{version}.tar.gz"
   provides 'node', 'node-waf'
 end
+
+dep('nodejs-dev.managed') {
+  installs []
+}
