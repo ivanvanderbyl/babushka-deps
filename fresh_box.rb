@@ -24,7 +24,8 @@ dep('ruby application stack') {
   requires [
     'ivanvanderbyl:ruby.src'.with('2.0.0', 'p0'),
     'ivanvanderbyl:running.nginx',
-    'vhost enabled.nginx',
+    # 'vhost enabled.nginx',
+    'configured.nginx'.with('/opt/nginx'),
     'dot files setup',
     'postgresql-dev.managed',
     'bundler.gem',
