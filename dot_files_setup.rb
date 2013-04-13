@@ -23,7 +23,7 @@ dep('dot files setup') {
   end
 
   def rendered_config(local_path)
-    renderable.send(:render_erb, dependency.load_path.parent / local_path, self)
+    renderable(local_path).send(:render_erb, dependency.load_path.parent / local_path, self)
   end
 
   met?{
