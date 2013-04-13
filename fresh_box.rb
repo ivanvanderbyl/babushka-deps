@@ -29,7 +29,7 @@ dep('ruby application stack') {
     'dot files setup',
     'postgresql-dev.managed',
     'bundler.gem',
-    'testpilot:nodejs.src'
+    'testpilot:nodejs.src'.with('0.10.4')
   ]
 }
 
