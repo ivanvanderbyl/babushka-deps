@@ -44,8 +44,39 @@ dep('postgresql.managed') {
 }
 
 dep('postgresql-dev.managed') {
-  installs ['postgresql-server-dev-9.2', 'postgresql-contrib']
+  requires 'postgresl major release sources'
+
+  installs [
+    'postgresql-server-dev-9.2',
+    'postgresql-contrib-9.2',
+    'libpq-dev'
+  ]
   provides []
+}
+
+dep('postgresl major release sources') {
+  def release
+    shell('lsb_release --codename --short')
+  end
+
+  met? {
+    File.exists?('/etc/apt/sources.list.d/pgdg.list') &&
+    !!(File.read('/etc/apt/sources.list.d/pgdg.list') =~ /#{release}/)
+  }
+
+  meet {
+    cmd = <<-LOL
+if [ -f /etc/apt/sources.list.d/pitti-postgresql-$(lsb_release --codename --short).list ] ]; then
+  rm /etc/apt/sources.list.d/pitti-postgresql-$(lsb_release --codename --short).list
+fi
+echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release --codename --short)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add -
+apt-get update
+apt-get install pgdg-keyring
+LOL
+
+  shell(cmd, :sudo => true)
+  }
 }
 
 dep 'postgres access', :username do

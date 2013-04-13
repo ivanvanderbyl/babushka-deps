@@ -26,6 +26,7 @@ dep('ruby application stack') {
     'ivanvanderbyl:running.nginx',
     'vhost enabled.nginx',
     'dot files setup',
+    'postgresql-dev.managed',
     'bundler.gem'
   ]
 }
