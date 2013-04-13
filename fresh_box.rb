@@ -16,7 +16,7 @@ dep('fresh box') {
   ]
 }
 
-dep('fresh application deployable') {
+dep('ruby application stack') {
   setup {
     unmeetable! "This dep cannot be run as root." if shell('whoami') == 'root'
   }
@@ -28,6 +28,10 @@ dep('fresh application deployable') {
     'dot files setup',
     'bundler.gem'
   ]
+}
+
+dep('postgres database master stack') {
+  requires 'postgres access'
 }
 
 dep('fail2ban.managed') {

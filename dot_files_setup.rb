@@ -24,7 +24,7 @@ dep('dot files setup') {
 
   meet {
     files.each do |file|
-      render_erb file, :to => dot_file_path / local_to_remote_name(file)
+      render_erb file, :to => dot_file_path / local_to_remote_name(file), :credit => false
     end
   }
 }
