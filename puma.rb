@@ -48,8 +48,8 @@ dep('puma apps configured', :deployment_paths) {
   }
 
   meet {
-    shell("cat > '#{path}'",
-      :input => renderable.send(:render_erb, renderable.path, self),
+    shell("cat > '#{renderable.path}'",
+      :input => renderable.send(:render_erb, dependency.load_path.parent / 'puma/etc/puma.conf.erb', self),
       :sudo => true
     )
   }
