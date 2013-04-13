@@ -43,8 +43,13 @@ dep('puma apps configured', :deployment_paths) {
     Babushka::Renderable.new(puma_config_path)
   end
 
+  def rendered_config
+    renderable.send(:render_erb, dependency.load_path.parent / 'puma/etc/puma.conf.erb', self)
+  end
+
   met? {
-    File.exists?(puma_config_path)
+    File.exists?(puma_config_path) &&
+    Digest::SHA1.hexdigest(rendered_config) == renderable.send(:sha_of, puma_config_path)
   }
 
   meet {
