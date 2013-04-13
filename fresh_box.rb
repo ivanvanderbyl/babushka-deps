@@ -27,7 +27,8 @@ dep('ruby application stack') {
     'vhost enabled.nginx',
     'dot files setup',
     'postgresql-dev.managed',
-    'bundler.gem'
+    'bundler.gem',
+    'testpilot:nodejs.src'
   ]
 }
 
