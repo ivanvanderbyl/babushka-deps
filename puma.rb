@@ -49,7 +49,7 @@ dep('puma apps configured', :deployment_paths) {
 
   meet {
     shell("cat > '#{path}'",
-      :input => renderable.send(:render_erb, renderable.path, self)
+      :input => renderable.send(:render_erb, renderable.path, self),
       :sudo => true
     )
   }
