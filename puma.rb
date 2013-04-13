@@ -36,7 +36,7 @@ dep('puma apps configured', :deployment_paths) {
   end
 
   def app_paths
-    deployment_paths.split(' ').join("\n")
+    deployment_paths.to_s.split(' ').join("\n")
   end
 
   met? {
