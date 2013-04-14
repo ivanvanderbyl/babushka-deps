@@ -1,5 +1,6 @@
-set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab
+# set expandtab
+set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 set number
 
 " Show trailing whitepace and spaces before a tab:
-:autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
