@@ -36,8 +36,10 @@ dep('dot files setup') {
 
   meet {
     files.each do |file|
+      remote_path = dot_file_path / local_to_remote_name(file)
+      log "Rendering file #{remote_path}"
       shell("cat > '#{dot_file_path / local_to_remote_name(file)}'",
-        :input => renderable(dot_file_path / local_to_remote_name(file)).send(:render_erb, file, self),
+        :input => renderable(remote_path).send(:render_erb, file, self),
         :sudo => true
       )
     end
