@@ -40,7 +40,6 @@ dep('dot files setup') {
         :input => renderable(dot_file_path / local_to_remote_name(file)).send(:render_erb, file, self),
         :sudo => true
       )
-      # render_erb file, :to => dot_file_path / local_to_remote_name(file), :credit => false
     end
   }
 }
